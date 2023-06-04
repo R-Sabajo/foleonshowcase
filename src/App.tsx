@@ -1,11 +1,15 @@
 import React from 'react';
+import { AppContainer } from './Components/AppContainer.style';
+import { GlobalStyle } from './Globals';
+import LoginModal from './Components/LoginModal';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <h1>Showcase Foleon Docs</h1>
-    </div>
+    <AppContainer>
+      <GlobalStyle />
+      <LoginModal></LoginModal>
+    </AppContainer>
   );
-}
+};
 
 export default App;
