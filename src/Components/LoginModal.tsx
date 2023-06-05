@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import { InputField, InputLabel, Button } from './Form.style';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '../Contexts/AppContext';
+
 import failIcon from '../img/fail.svg';
 import succesIcon from '../img/succes.svg';
 
 export const LoginModal: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [apiSecret, setApiSecret] = useState<string>('');
-  const [token, setToken] = useState<string>('');
   const [loginMessage, setLoginMessage] = useState<any>('');
   const [loginSucces, setLoginSucces] = useState<boolean>(false);
+  const { token, setToken } = useContext(AppContext);
 
   // REQUEST ACCESS TOKEN
   const reqToken = (APIKey: string, APISecret: string) => {
@@ -42,19 +44,22 @@ export const LoginModal: React.FC = () => {
         }
       })
       .then(data => {
-        let accessToken = data.access_token;
-        setToken(accessToken);
+        if (!data) {
+          return;
+        } else {
+          setTimeout(() => {
+            setToken(data.access_token);
+          }, 2000);
+        }
       })
       .catch(err => console.log(err.message));
   };
 
-  const handleLoginClick: any = () => {
+  const handleLoginClick = () => {
     reqToken(apiKey, apiSecret);
-    setApiKey('');
-    setApiSecret('');
   };
 
-  return (
+  return !token ? (
     <LoginModalDiv>
       <Title>Showcase Foleon Docs</Title>
       <LoginForm>
@@ -88,22 +93,15 @@ export const LoginModal: React.FC = () => {
           {loginMessage}
         </LoginMessage>
 
-        <Button onClick={() => handleLoginClick()}>Log in</Button>
+        <Button type="submit" onClick={() => handleLoginClick()}>
+          Log in
+        </Button>
       </LoginForm>
     </LoginModalDiv>
-  );
+  ) : null;
 };
 
 // STYLES
-const LoginMessage = styled.p`
-  height: 30px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 15px;
-  font-weight: 400;
-  color: ${props => props.color};
-`;
 
 const LoginModalDiv = styled.div`
   border: 1px var(--Grey-Blue) solid;
@@ -138,4 +136,14 @@ const LoginForm = styled.div`
   padding: 40px 40px 40px;
   border-radius: 8px 8px 0 0;
   transform: translateY(-40px);
+`;
+
+const LoginMessage = styled.p`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  color: ${props => props.color};
 `;
