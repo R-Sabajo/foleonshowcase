@@ -7,26 +7,31 @@ export const InputField = styled.input`
   border-radius: 4px;
   border: 1px solid #b0b7c3;
   padding: 0px 8px;
-  margin: 5px 0;
+  margin-top: 5px;
 `;
 
 export const InputLabel = styled.label`
   font-size: 15px;
   margin-bottom: 5px;
-  font-weight: bold;
-  color: black;
+  font-weight: 600;
+  color: var(--Dark-Text);
 `;
 
 export const Button = styled.button`
-  width: 120px;
-  height: 48px;
+  height: 40px;
+  width: 96px;
+  padding: 0px 16px;
   background-color: rgb(0, 177, 255);
+  border: none;
   border-radius: 4px;
-  border: 1px solid transparent;
-  color: white;
+  color: #fff;
   font-family: 'Proxima Nova';
   font-weight: bold;
   font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
   :hover {
     background-color: rgb(0, 159, 230);

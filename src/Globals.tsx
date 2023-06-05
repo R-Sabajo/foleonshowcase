@@ -3,7 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 :root {
 	--Dark-Blue: #001945;
+	--Grey-Blue: #8E98AB;
 	--Light-Grey: #F2F4F8;
+	--Dark-Text: #001945;
 }
 
 *,
@@ -17,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
 
 body {
 	font-family: 'Proxima Nova';
-	/* background-color: var(--Dark-Blue); */
+	background-color: var(--Dark-Blue);
 	color: #fff;
 }
 `;
