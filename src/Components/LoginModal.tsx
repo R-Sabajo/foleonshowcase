@@ -6,6 +6,45 @@ export const LoginModal: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [apiSecret, setApiSecret] = useState<string>('');
   const [token, setToken] = useState<string>('');
+  const [loginMessage, setLoginMessage] = useState<any>(<>&nbsp;</>);
+  const [loginSucces, setLoginSucces] = useState<boolean>(false);
+
+  // REQUEST ACCESS TOKEN
+  const reqToken = (APIKey: string, APISecret: string) => {
+    let options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        grant_type: 'client_credentials',
+        client_id: `${APIKey}`,
+        client_secret: `${APISecret}`,
+      }),
+    };
+
+    fetch('https://api.foleon.com/oauth', options)
+      .then(res => {
+        if (!res.ok) {
+          console.log(res.status);
+          setLoginSucces(false);
+          setLoginMessage(
+            'The API Key or Secret you entered is incorrect. Try again.'
+          );
+          return null;
+        } else {
+          setLoginSucces(true);
+          setLoginMessage('Login Succesful!');
+          return res.json();
+        }
+      })
+      .then(data => {
+        let accessToken = data.access_token;
+        setToken(accessToken);
+      })
+      .catch(err => console.log(err.message));
+  };
 
   const handleLoginClick: any = () => {
     reqToken(apiKey, apiSecret);
@@ -20,6 +59,7 @@ export const LoginModal: React.FC = () => {
         <InputLabel>
           API Key
           <InputField
+            value={apiKey}
             onChange={e => setApiKey(e.target.value)}
             type="username"
             required
@@ -29,13 +69,16 @@ export const LoginModal: React.FC = () => {
         <InputLabel>
           API Secret
           <InputField
+            value={apiSecret}
             onChange={e => setApiSecret(e.target.value)}
             type="password"
             required
           />
         </InputLabel>
 
-        <LoginMessage id="loginMessage">&nbsp;</LoginMessage>
+        <LoginMessage color={loginSucces ? 'green' : 'red'}>
+          {loginMessage}
+        </LoginMessage>
 
         <Button onClick={() => handleLoginClick()}>Log in</Button>
       </LoginForm>
@@ -43,41 +86,11 @@ export const LoginModal: React.FC = () => {
   );
 };
 
-// REQUEST ACCESS TOKEN
-const reqToken = (APIKey: string, APISecret: string) => {
-  let options = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      grant_type: 'client_credentials',
-      client_id: `${APIKey}`,
-      client_secret: `${APISecret}`,
-    }),
-  };
-
-  fetch('https://api.foleon.com/oauth', options)
-    .then(res => {
-      if (!res.ok) {
-        console.log(res.status);
-      }
-
-      return res.json();
-    })
-    .then(data => {
-      let token = data.access_token;
-      console.log(token);
-    })
-    .catch(err => console.log(err.message));
-};
-
 // STYLES
 const LoginMessage = styled.p`
   font-size: 15px;
   font-weight: 400;
-  color: black;
+  color: ${props => props.color};
 `;
 
 const LoginModalDiv = styled.div`
