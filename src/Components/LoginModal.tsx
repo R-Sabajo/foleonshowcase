@@ -1,34 +1,81 @@
 import styled from 'styled-components';
 import { InputField, InputLabel, Button } from './Form.style';
+import { useState } from 'react';
 
-export default function LoginModal() {
+export const LoginModal: React.FC = () => {
+  const [apiKey, setApiKey] = useState<string>('');
+  const [apiSecret, setApiSecret] = useState<string>('');
+  const [token, setToken] = useState<string>('');
+
+  const handleLoginClick: any = () => {
+    reqToken(apiKey, apiSecret);
+    setApiKey('');
+    setApiSecret('');
+  };
+
   return (
     <LoginModalDiv>
       <Title>Showcase Foleon Docs</Title>
       <LoginForm>
         <InputLabel>
           API Key
-          <InputField type="username" required />
+          <InputField
+            onChange={e => setApiKey(e.target.value)}
+            type="username"
+            required
+          />
         </InputLabel>
 
         <InputLabel>
           API Secret
-          <InputField type="password" required />
+          <InputField
+            onChange={e => setApiSecret(e.target.value)}
+            type="password"
+            required
+          />
         </InputLabel>
 
         <LoginMessage id="loginMessage">&nbsp;</LoginMessage>
 
-        <Button>Log in</Button>
+        <Button onClick={() => handleLoginClick()}>Log in</Button>
       </LoginForm>
     </LoginModalDiv>
   );
-}
-const loginSucces: boolean = true;
+};
 
+// Requesting the Access Token
+const reqToken = (APIKey: string, APISecret: string) => {
+  fetch('https://api.foleon.com/oauth', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      grant_type: 'client_credentials',
+      client_id: `${APIKey}`,
+      client_secret: `${APISecret}`,
+    }),
+  })
+    .then(res => {
+      if (!res.ok) {
+        console.log(res.status);
+      }
+
+      return res.json();
+    })
+    .then(data => {
+      let token = data.access_token;
+      console.log(token);
+    })
+    .catch(err => console.log(err.message));
+};
+
+// STYLES
 const LoginMessage = styled.p`
   font-size: 15px;
   font-weight: 400;
-  color: ${loginSucces ? 'green' : 'red'};
+  color: black;
 `;
 
 const LoginModalDiv = styled.div`
