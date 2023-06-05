@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { InputField, InputLabel, Button } from './Form.style';
 import { useState } from 'react';
+import failIcon from '../img/fail.svg';
+import succesIcon from '../img/succes.svg';
 
 export const LoginModal: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [apiSecret, setApiSecret] = useState<string>('');
   const [token, setToken] = useState<string>('');
-  const [loginMessage, setLoginMessage] = useState<any>(<>&nbsp;</>);
+  const [loginMessage, setLoginMessage] = useState<any>('');
   const [loginSucces, setLoginSucces] = useState<boolean>(false);
 
   // REQUEST ACCESS TOKEN
@@ -77,6 +79,12 @@ export const LoginModal: React.FC = () => {
         </InputLabel>
 
         <LoginMessage color={loginSucces ? 'green' : 'red'}>
+          {loginMessage && (
+            <img
+              src={loginSucces ? succesIcon : failIcon}
+              alt="login succes or fail icon"
+            />
+          )}
           {loginMessage}
         </LoginMessage>
 
@@ -88,6 +96,10 @@ export const LoginModal: React.FC = () => {
 
 // STYLES
 const LoginMessage = styled.p`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 15px;
   font-weight: 400;
   color: ${props => props.color};
