@@ -43,9 +43,9 @@ export const LoginModal: React.FC = () => {
   );
 };
 
-// Requesting the Access Token
+// REQUEST ACCESS TOKEN
 const reqToken = (APIKey: string, APISecret: string) => {
-  fetch('https://api.foleon.com/oauth', {
+  let options = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -56,7 +56,9 @@ const reqToken = (APIKey: string, APISecret: string) => {
       client_id: `${APIKey}`,
       client_secret: `${APISecret}`,
     }),
-  })
+  };
+
+  fetch('https://api.foleon.com/oauth', options)
     .then(res => {
       if (!res.ok) {
         console.log(res.status);
