@@ -2,15 +2,18 @@ import styled from 'styled-components';
 import { Header } from './Header';
 import { VBar } from './VBar';
 import { Projects } from './Projects';
+import { AppContext } from '../Contexts/AppContext';
+import { useContext } from 'react';
 
-export const Main = () => {
-  return (
+export const Main: React.FC = () => {
+  const { token } = useContext(AppContext);
+  return token ? (
     <Container>
       <Header />
       <VBar />
       <Projects />
     </Container>
-  );
+  ) : null;
 };
 
 export const Container = styled.div`

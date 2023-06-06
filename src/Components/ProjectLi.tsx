@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
 
-export const ProjectLi = () => {
+export const ProjectLi: React.FC = () => {
   return (
     <Container>
       <Title>

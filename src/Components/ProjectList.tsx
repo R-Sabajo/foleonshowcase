@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ProjectLi } from './ProjectLi';
 
-export const ProjectList = () => {
+export const ProjectList: React.FC = () => {
   return (
     <Container>
       <List>
@@ -40,6 +40,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  height: 87%;
+  height: 85%;
   padding: 0 25px 50px;
 `;
