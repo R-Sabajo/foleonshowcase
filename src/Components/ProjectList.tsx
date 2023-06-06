@@ -15,19 +15,31 @@ export const ProjectList = () => {
         <ProjectLi />
         <ProjectLi />
         <ProjectLi />
+        <ProjectLi />
+        <ProjectLi />
+        <ProjectLi />
+        <ProjectLi />
+        <ProjectLi />
       </List>
     </Container>
   );
 };
 
 const List = styled.div`
-  width: 250px;
-  height: auto;
+  width: 300px;
+  min-height: 300px;
+  max-height: auto;
+  align-items: center;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  overflow: scroll;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  padding: 0 25px;
+  height: 87%;
+  padding: 0 25px 50px;
 `;

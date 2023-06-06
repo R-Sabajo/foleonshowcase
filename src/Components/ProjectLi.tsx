@@ -21,6 +21,9 @@ const Container = styled.div`
   height: 60px;
 
   border-bottom: 1px solid var(--Grey-Blue);
+  :last-child {
+    border-bottom: none;
+  }
 `;
 
 const Icon = styled.img`

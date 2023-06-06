@@ -14,6 +14,7 @@ export const Projects = () => {
 export const Container = styled.div`
   width: 300px;
   height: 100%;
+  overflow: hidden;
   grid-area: projects;
   background: linear-gradient(
     90deg,

@@ -25,7 +25,7 @@ const Icon = styled.img`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 300px;
   height: 140px;
   grid-area: projects;
