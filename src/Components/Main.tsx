@@ -1,10 +1,7 @@
 import styled from 'styled-components';
-import { useState, useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
 import { Header } from './Header';
 
 export const Main = () => {
-  const { token } = useContext(AppContext);
   return (
     <Container>
       <Header />

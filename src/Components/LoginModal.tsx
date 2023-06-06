@@ -95,9 +95,7 @@ export const LoginModal: React.FC = () => {
             {loginMessage}
           </LoginMessage>
 
-          <Button type="submit" onClick={() => handleLoginClick()}>
-            Log in
-          </Button>
+          <Button onClick={() => handleLoginClick()}>Log in</Button>
         </LoginForm>
       </LoginModalDiv>
     </Container>

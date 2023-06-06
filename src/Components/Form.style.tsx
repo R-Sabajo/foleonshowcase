@@ -25,13 +25,13 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   color: #fff;
-  font-family: 'Proxima Nova';
-  font-weight: bold;
+  font-weight: 600;
   font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background-color 200ms ease-in-out;
 
   :hover {
     background-color: rgb(0, 159, 230);

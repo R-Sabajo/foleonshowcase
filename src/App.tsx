@@ -4,7 +4,7 @@ import { AppProvider } from './Contexts/AppContext';
 import { Main } from './Components/Main';
 import styled from 'styled-components';
 
-export const AppContainer = styled.div`
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -15,11 +15,11 @@ export const AppContainer = styled.div`
 const App: React.FC = () => {
   return (
     <AppProvider>
-      <AppContainer>
+      <Container>
         <GlobalStyle />
         <Main />
         <LoginModal />
-      </AppContainer>
+      </Container>
     </AppProvider>
   );
 };
