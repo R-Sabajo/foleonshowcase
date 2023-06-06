@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { Header } from './Header';
 import { VBar } from './VBar';
+import { Projects } from './Projects';
 
 export const Main = () => {
   return (
     <Container>
       <Header />
       <VBar />
+      <Projects />
     </Container>
   );
 };

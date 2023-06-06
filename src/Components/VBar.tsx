@@ -16,12 +16,15 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: end;
   background-color: var(--Dark-Blue);
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   grid-area: vbar;
+  z-index: 4;
 `;
 
 const Version = styled.p`
-  font-size: 22;
-  font-weight: 600;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--Grey-Blue);
 `;
