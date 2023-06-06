@@ -61,7 +61,7 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Name = styled.p`
-  font-size: 22;
-  font-weight: 600;
+const Name = styled.h1`
+  font-size: 20px;
+  font-weight: 500;
 `;

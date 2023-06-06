@@ -1,7 +1,14 @@
 import styled from 'styled-components';
+import { ProjectsNav } from './ProjectsNav';
+import { ProjectList } from './ProjectList';
 
 export const Projects = () => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <ProjectsNav />
+      <ProjectList />
+    </Container>
+  );
 };
 
 export const Container = styled.div`
@@ -10,7 +17,7 @@ export const Container = styled.div`
   grid-area: projects;
   background: linear-gradient(
     90deg,
-    var(--Dark-Blue) 66.6%,
+    var(--Dark-Blue) 44.4%,
     var(--Light-Blue) 100%
   );
   z-index: 3;

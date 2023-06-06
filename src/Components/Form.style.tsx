@@ -12,9 +12,8 @@ export const InputField = styled.input`
 
 export const InputLabel = styled.label`
   font-size: 15px;
-  margin-bottom: 5px;
   font-weight: 600;
-  color: var(--Dark-Text);
+  color: var(--Dark-Blue);
 `;
 
 export const Button = styled.button`
@@ -36,4 +35,15 @@ export const Button = styled.button`
   :hover {
     background-color: rgb(0, 159, 230);
   }
+`;
+
+export const SearchField = styled.input`
+  width: 100%;
+  height: 40px;
+  background-color: ${props => props.theme};
+  color: ${props => props.color};
+  border-radius: 25px;
+  border: none;
+  padding: 0px 15px;
+  margin-top: 5px;
 `;
