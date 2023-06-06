@@ -1,12 +1,8 @@
 import styled from 'styled-components';
-import { useState, useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
 import { FoleonLogo } from './FoleonLogo';
 import { AccountName } from './AccountName';
 
 export const Header = () => {
-  const { token } = useContext(AppContext);
-
   return (
     <Container>
       <FoleonLogo />
