@@ -14,7 +14,8 @@ export const LoginModal: React.FC = () => {
   const { token, setToken } = useContext(AppContext);
 
   // REQUEST ACCESS TOKEN
-  const reqToken = (APIKey: string, APISecret: string) => {
+  const reqToken = async (APIKey: string, APISecret: string) => {
+    let url = 'https://api.foleon.com/oauth';
     let options = {
       method: 'POST',
       headers: {
@@ -28,31 +29,28 @@ export const LoginModal: React.FC = () => {
       }),
     };
 
-    fetch('https://api.foleon.com/oauth', options)
-      .then(res => {
-        if (!res.ok) {
-          console.log(res.status);
-          setLoginSucces(false);
-          setLoginMessage(
-            'The API Key or Secret you entered is incorrect. Try again.'
-          );
-          return null;
-        } else {
-          setLoginSucces(true);
-          setLoginMessage('Login Succesful!');
-          return res.json();
-        }
-      })
-      .then(data => {
-        if (!data) {
-          return;
-        } else {
-          setTimeout(() => {
-            setToken(data.access_token);
-          }, 2000);
-        }
-      })
-      .catch(err => console.log(err.message));
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        setLoginSucces(false);
+        setLoginMessage(
+          'The API Key or Secret you entered is incorrect. Try again.'
+        );
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setLoginSucces(true);
+      setLoginMessage('Login Succesful!');
+      const data = await response.json();
+      if (!data) {
+        return;
+      } else {
+        setTimeout(() => {
+          setToken(data.access_token);
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleLoginClick = () => {
