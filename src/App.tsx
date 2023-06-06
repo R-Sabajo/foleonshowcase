@@ -1,7 +1,7 @@
 import { GlobalStyle } from './Globals';
 import { LoginModal } from './Components/LoginModal';
 import { AppProvider } from './Contexts/AppContext';
-import { Header } from './Components/Header';
+import { Main } from './Components/Main';
 import styled from 'styled-components';
 
 export const AppContainer = styled.div`
@@ -17,7 +17,7 @@ const App: React.FC = () => {
     <AppProvider>
       <AppContainer>
         <GlobalStyle />
-        <Header />
+        <Main />
         <LoginModal />
       </AppContainer>
     </AppProvider>
