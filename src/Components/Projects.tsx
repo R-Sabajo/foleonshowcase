@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Projects = () => {
-  return <Container>Projects</Container>;
+  return <Container></Container>;
 };
 
 export const Container = styled.div`
