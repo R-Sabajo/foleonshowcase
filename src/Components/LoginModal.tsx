@@ -40,12 +40,15 @@ export const LoginModal: React.FC = () => {
       }
       setLoginSucces(true);
       setLoginMessage('Login Succesful!');
+      setApiKey('');
+      setApiSecret('');
       const data = await response.json();
       if (!data) {
         return;
       } else {
         setTimeout(() => {
           setToken(data.access_token);
+          setLoginMessage('');
         }, 2000);
       }
     } catch (error) {
@@ -58,48 +61,59 @@ export const LoginModal: React.FC = () => {
   };
 
   return !token ? (
-    <LoginModalDiv>
-      <Title>Showcase Foleon Docs</Title>
-      <LoginForm>
-        <InputLabel>
-          API Key
-          <InputField
-            value={apiKey}
-            onChange={e => setApiKey(e.target.value)}
-            type="username"
-            required
-          />
-        </InputLabel>
-
-        <InputLabel>
-          API Secret
-          <InputField
-            value={apiSecret}
-            onChange={e => setApiSecret(e.target.value)}
-            type="password"
-            required
-          />
-        </InputLabel>
-
-        <LoginMessage color={loginSucces ? 'green' : 'red'}>
-          {loginMessage && (
-            <img
-              src={loginSucces ? succesIcon : failIcon}
-              alt="login succes or fail icon"
+    <Container>
+      <LoginModalDiv>
+        <Title>Showcase Foleon Docs</Title>
+        <LoginForm>
+          <InputLabel>
+            API Key
+            <InputField
+              value={apiKey}
+              onChange={e => setApiKey(e.target.value)}
+              type="username"
+              required
             />
-          )}
-          {loginMessage}
-        </LoginMessage>
+          </InputLabel>
 
-        <Button type="submit" onClick={() => handleLoginClick()}>
-          Log in
-        </Button>
-      </LoginForm>
-    </LoginModalDiv>
+          <InputLabel>
+            API Secret
+            <InputField
+              value={apiSecret}
+              onChange={e => setApiSecret(e.target.value)}
+              type="password"
+              required
+            />
+          </InputLabel>
+
+          <LoginMessage color={loginSucces ? 'green' : 'red'}>
+            {loginMessage && (
+              <img
+                src={loginSucces ? succesIcon : failIcon}
+                alt="login succes or fail icon"
+              />
+            )}
+            {loginMessage}
+          </LoginMessage>
+
+          <Button type="submit" onClick={() => handleLoginClick()}>
+            Log in
+          </Button>
+        </LoginForm>
+      </LoginModalDiv>
+    </Container>
   ) : null;
 };
 
 // STYLES
+
+export const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const LoginModalDiv = styled.div`
   border: 1px var(--Grey-Blue) solid;
