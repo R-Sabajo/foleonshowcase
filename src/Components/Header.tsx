@@ -21,4 +21,5 @@ const Container = styled.div`
   background-color: var(--Dark-Blue);
   box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  grid-area: header;
 `;
