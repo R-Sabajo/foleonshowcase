@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
+import { useContext } from 'react';
+import { ProjectContext } from '../Contexts/ProjectContext';
 
-export const ProjectLi: React.FC = () => {
-  return (
+export const ProjectLi: any = () => {
+  const { projects } = useContext(ProjectContext);
+  console.log(projects);
+  return projects.map((p: any) => (
     <Container>
       <Title>
         <Icon src={folder} alt="folder icon" />
-        Project 1
+        {p.name}
       </Title>
       <Count>3</Count>
     </Container>
-  );
+  ));
 };
 
 const Container = styled.div`

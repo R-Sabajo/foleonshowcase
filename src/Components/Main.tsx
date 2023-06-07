@@ -3,17 +3,26 @@ import { Header } from './Header';
 import { VBar } from './VBar';
 import { Projects } from './Projects';
 import { AppContext } from '../Contexts/AppContext';
+import { ProjectContext, ProjectProvider } from '../Contexts/ProjectContext';
 import { useContext } from 'react';
 
 export const Main: React.FC = () => {
   const { token } = useContext(AppContext);
-  return token ? (
+  const { projects } = useContext(ProjectContext);
+
+  return !projects === undefined ? (
     <Container>
       <Header />
       <VBar />
-      <Projects />
+      <ProjectProvider>
+        <Projects />
+      </ProjectProvider>
     </Container>
-  ) : null;
+  ) : (
+    <Container>
+      <h1>Loading...</h1>
+    </Container>
+  );
 };
 
 export const Container = styled.div`

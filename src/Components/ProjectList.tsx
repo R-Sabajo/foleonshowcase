@@ -1,27 +1,18 @@
 import styled from 'styled-components';
 import { ProjectLi } from './ProjectLi';
+import { useContext } from 'react';
+import { ProjectContext } from '../Contexts/ProjectContext';
 
 export const ProjectList: React.FC = () => {
-  return (
+  const { projects } = useContext(ProjectContext);
+  return projects ? (
     <Container>
       <List>
         <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
-        <ProjectLi />
       </List>
     </Container>
+  ) : (
+    <h1>Loading...</h1>
   );
 };
 
