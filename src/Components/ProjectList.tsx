@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
+import folderBlue from '../img/folderBlue.svg';
 import { useContext, useEffect, useState } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import { AppContext } from '../Contexts/AppContext';
@@ -9,7 +10,10 @@ export const ProjectList: any = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { projects, setProjects } = useContext(ProjectContext);
   const { token, setToken } = useContext(AppContext);
+
   const url = 'https://api.foleon.com/v2/magazine/title?page=1&limit=50';
+  // const [selected, setSelected] = useState<boolean>(true);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +60,10 @@ export const ProjectList: any = () => {
     return;
   }
 
+  const handleClick = (id: number) => {
+    setSelectedProject(id === selectedProject ? id : id);
+  };
+
   return (
     <Container>
       <List>
@@ -63,9 +71,16 @@ export const ProjectList: any = () => {
           <h1>Loading...</h1>
         ) : (
           projects?.map((p: any) => (
-            <Li key={p.id}>
+            <Li
+              key={p.id}
+              isSelected={p.id === selectedProject}
+              onClick={() => handleClick(p.id)}
+            >
               <Title>
-                <Icon src={folder} alt="folder icon" />
+                <Icon
+                  src={p.id === selectedProject ? folderBlue : folder}
+                  alt="folder icon"
+                />
                 {p.name}
               </Title>
               <Count></Count>
@@ -77,16 +92,26 @@ export const ProjectList: any = () => {
   );
 };
 
-const Li = styled.div`
+const Li = styled.div<{ isSelected: boolean }>`
+  background: ${props => (props.isSelected ? 'var(--Light-Grey)' : 'inherit')};
+  color: ${props => (props.isSelected ? 'var(--Dark-Blue)' : 'inherit')};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
+  width: 300px;
   height: 60px;
+  padding: 0 25px;
+  border-bottom: 1px solid var(--Light-Blue);
+  cursor: pointer;
+  user-select: none;
 
-  border-bottom: 1px solid var(--Grey-Blue);
   :last-child {
     border-bottom: none;
+  }
+
+  :hover {
+    background: ${props =>
+      props.isSelected ? 'var(--Light-Grey)' : 'var(--Light-Blue)'};
   }
 `;
 
@@ -108,7 +133,7 @@ const Count = styled.h3`
 `;
 
 const List = styled.div`
-  width: 250px;
+  width: 300px;
   min-height: 300px;
   max-height: auto;
   align-items: center;
@@ -123,5 +148,5 @@ const Container = styled.div`
   flex-direction: column;
   width: 300px;
   height: 85%;
-  padding: 0 25px 50px;
+  padding: 0 0px 50px;
 `;

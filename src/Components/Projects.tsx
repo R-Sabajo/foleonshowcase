@@ -18,7 +18,7 @@ export const Container = styled.div`
   grid-area: projects;
   background: linear-gradient(
     90deg,
-    var(--Dark-Blue) 44.4%,
+    var(--Dark-Blue) 33.3%,
     var(--Light-Blue) 100%
   );
   z-index: 3;

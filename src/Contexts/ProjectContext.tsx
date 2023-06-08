@@ -20,10 +20,7 @@ export interface ProjectContextInterface {
 }
 
 const defaultState = {
-  projects: [
-    { name: 'Hello', id: 0 },
-    { name: 'Duck', id: 1 },
-  ],
+  projects: [],
   setProjects: (projects: Project[]) => [],
 } as ProjectContextInterface;
 

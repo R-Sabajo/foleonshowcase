@@ -20,7 +20,7 @@ export const Button = styled.button`
   height: 40px;
   width: 96px;
   padding: 0px 16px;
-  background-color: rgb(0, 177, 255);
+  background-color: var(--Blue);
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -46,4 +46,8 @@ export const SearchField = styled.input`
   border: none;
   padding: 0px 15px;
   margin-top: 5px;
+
+  ::placeholder {
+    color: var(--Grey-Blue);
+  }
 `;
