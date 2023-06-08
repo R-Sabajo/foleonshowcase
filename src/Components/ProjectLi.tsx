@@ -1,20 +1,74 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
+import { AppContext } from '../Contexts/AppContext';
 
 export const ProjectLi: any = () => {
-  const { projects } = useContext(ProjectContext);
-  console.log(projects);
-  return projects.map((p: any) => (
-    <Container>
-      <Title>
-        <Icon src={folder} alt="folder icon" />
-        {p.name}
-      </Title>
-      <Count>3</Count>
-    </Container>
-  ));
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { projects, setProjects } = useContext(ProjectContext);
+  const { token, setToken } = useContext(AppContext);
+  const url = 'https://api.foleon.com/v2/magazine/title?page=1&limit=50';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      let options = {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            setToken('');
+          }
+          throw new Error('Request failed. status: ' + response.status);
+        }
+
+        const jsonData = await response.json();
+
+        const projectData = jsonData?._embedded.title.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          editions: p._embedded.editions._links.self.href,
+        }));
+        setProjects(projectData);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [setProjects, setToken, token]);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
+    projects?.map((p: any) => (
+      <Container key={p.id}>
+        <Title>
+          <Icon src={folder} alt="folder icon" />
+          {p.name}
+        </Title>
+        <Count></Count>
+      </Container>
+    ))
+  );
 };
 
 const Container = styled.div`

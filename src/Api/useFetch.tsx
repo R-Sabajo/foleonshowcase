@@ -26,7 +26,7 @@ export const useFetch = (url: string) => {
           if (response.status === 401 || response.status === 403) {
             setToken('');
           }
-          throw new Error('Request failed');
+          throw new Error('Request failed. status: ' + response.status);
         }
 
         const jsonData = await response.json();

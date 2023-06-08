@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../Contexts/AppContext';
 
 export const AccountName = () => {
@@ -7,38 +7,40 @@ export const AccountName = () => {
   const [accountName, setAccountName] = useState('');
   const [accountId, setAccountId] = useState('');
 
-  const reqAccount = async (token: string) => {
-    let url = 'https://api.foleon.com/v2/account';
-    let options = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-    };
+  useEffect(() => {
+    const reqAccount = async (token: string) => {
+      let url = 'https://api.foleon.com/v2/account';
+      let options = {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      };
 
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-          setToken('');
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            setToken('');
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
 
-      const data = await response.json();
-      if (!data) {
-        return;
-      } else {
-        setAccountName(data._embedded.account[0].name);
-        setAccountId(data._embedded.account[0].id);
+        const data = await response.json();
+        if (!data) {
+          return;
+        } else {
+          setAccountName(data._embedded.account[0].name);
+          setAccountId(data._embedded.account[0].id);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  reqAccount(token);
+    };
+    reqAccount(token);
+  }, [setToken, token]);
 
   return (
     <Container>
