@@ -1,16 +1,29 @@
 import styled from 'styled-components';
 import { InputLabel, SearchField } from './Form.style';
 import searchIcon from '../img/searchIcon.svg';
+import { ProjectContext } from '../Contexts/ProjectContext';
+import { useContext } from 'react';
+import { useState } from 'react';
 
 export const ProjectsNav = () => {
+  const [search, setSearch] = useState<string>('');
+
+  // const { projects, setProjects } = useContext(ProjectContext);
+
+  const handleSearch = (e: string) => {
+    setSearch(e);
+  };
+
   return (
     <Container>
       <Title>Projects</Title>
       <InputLabel>
         <SearchField
+          value={search}
+          onChange={e => handleSearch(e.target.value)}
           color="var(--Light-Grey)"
           theme="var(--Dark-Blue)"
-          placeholder="Search projects"
+          placeholder="search projects"
         />
         <Icon src={searchIcon} alt="search icon" />
       </InputLabel>
