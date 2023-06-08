@@ -1,64 +1,14 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
 import folderBlue from '../img/folderBlue.svg';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
-import { AppContext } from '../Contexts/AppContext';
 
 export const ProjectList: any = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { projects, setProjects } = useContext(ProjectContext);
-  const { token, setToken } = useContext(AppContext);
+  const { projects, currentProject, setCurrentProject } =
+    useContext(ProjectContext);
 
-  const url = 'https://api.foleon.com/v2/magazine/title?page=1&limit=50';
-  // const [selected, setSelected] = useState<boolean>(true);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      let options = {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      };
-
-      try {
-        const response = await fetch(url, options);
-
-        if (!response.ok) {
-          if (response.status === 401 || response.status === 403) {
-            setToken('');
-          }
-          throw new Error('Request failed. status: ' + response.status);
-        }
-
-        const jsonData = await response.json();
-
-        const projectData = jsonData?._embedded.title.map((p: any) => ({
-          id: p.id,
-          name: p.name,
-          editions: p._embedded.editions._links.self.href,
-        }));
-        setProjects(projectData);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [setProjects, setToken, token]);
-
-  if (error) {
-    console.log(error);
-    return;
-  }
 
   const handleClick = (id: number) => {
     setSelectedProject(id === selectedProject ? id : id);
@@ -67,26 +17,22 @@ export const ProjectList: any = () => {
   return (
     <Container>
       <List>
-        {isLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          projects?.map((p: any) => (
-            <Li
-              key={p.id}
-              isSelected={p.id === selectedProject}
-              onClick={() => handleClick(p.id)}
-            >
-              <Title>
-                <Icon
-                  src={p.id === selectedProject ? folderBlue : folder}
-                  alt="folder icon"
-                />
-                {p.name}
-              </Title>
-              <Count></Count>
-            </Li>
-          ))
-        )}
+        {projects?.map((p: any) => (
+          <Li
+            key={p.id}
+            isSelected={p.id === selectedProject}
+            onClick={() => handleClick(p.id)}
+          >
+            <Title>
+              <Icon
+                src={p.id === selectedProject ? folderBlue : folder}
+                alt="folder icon"
+              />
+              {p.name}
+            </Title>
+            <Count>{p.count}</Count>
+          </Li>
+        ))}
       </List>
     </Container>
   );

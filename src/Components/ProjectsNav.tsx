@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { InputLabel, SearchField } from './Form.style';
 import searchIcon from '../img/searchIcon.svg';
-import { ProjectContext } from '../Contexts/ProjectContext';
-import { useContext } from 'react';
 import { useState } from 'react';
 
 export const ProjectsNav = () => {
