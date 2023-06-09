@@ -47,45 +47,47 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const { token, setToken } = useContext(AppContext);
 
   useEffect(() => {
-    if (token) fetchProjects();
-    console.log(projects);
-  }, [token]);
+    if (token) {
+      const fetchProjects = async () => {
+        let options = {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        };
 
-  const fetchProjects = async () => {
-    let options = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-    };
+        try {
+          const response = await fetch(url, options);
 
-    try {
-      const response = await fetch(url, options);
+          if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+              setToken('');
+            }
+            throw new Error('Request failed. status: ' + response.status);
+          }
 
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-          setToken('');
+          const jsonData = await response.json();
+          const projectData = jsonData?._embedded.title.map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            count: p._computed.editions_count,
+            editions: p._links.self.href,
+          }));
+          const firstProject = jsonData?._embedded?.title[0].id;
+
+          setProjects(projectData);
+          setCurrentProject(firstProject);
+        } catch (error: any) {
+          console.log(error.message);
+          setProjects([]);
         }
-        throw new Error('Request failed. status: ' + response.status);
-      }
+      };
 
-      const jsonData = await response.json();
-      const projectData = jsonData?._embedded.title.map((p: any) => ({
-        id: p.id,
-        name: p.name,
-        count: p._computed.editions_count,
-        editions: p._links.self.href,
-      }));
-      const firstProject = jsonData?._embedded.title[0].id;
-
-      setProjects(projectData);
-      setCurrentProject(firstProject);
-    } catch (error: any) {
-      console.log(error.message);
+      fetchProjects();
     }
-  };
+  }, [token, setToken, url]);
 
   return (
     <ProjectContext.Provider

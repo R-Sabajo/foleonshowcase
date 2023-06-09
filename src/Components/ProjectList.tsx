@@ -8,29 +8,27 @@ export const ProjectList: any = () => {
   const { projects, currentProject, setCurrentProject } =
     useContext(ProjectContext);
 
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-
   const handleClick = (id: number) => {
-    setSelectedProject(id === selectedProject ? id : id);
+    setCurrentProject(id === currentProject ? id : id);
   };
 
   return (
     <Container>
       <List>
-        {projects?.map((p: any) => (
+        {projects?.map((project: any) => (
           <Li
-            key={p.id}
-            isSelected={p.id === selectedProject}
-            onClick={() => handleClick(p.id)}
+            key={project.id}
+            isSelected={project.id === currentProject}
+            onClick={() => handleClick(project.id)}
           >
             <Title>
               <Icon
-                src={p.id === selectedProject ? folderBlue : folder}
+                src={project.id === currentProject ? folderBlue : folder}
                 alt="folder icon"
               />
-              {p.name}
+              {project.name}
             </Title>
-            <Count>{p.count}</Count>
+            <Count>{project.count}</Count>
           </Li>
         ))}
       </List>
@@ -44,7 +42,7 @@ const Li = styled.div<{ isSelected: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  width: 250px;
   height: 60px;
   padding: 0 25px;
   border-bottom: 1px solid var(--Light-Blue);
@@ -79,7 +77,7 @@ const Count = styled.h3`
 `;
 
 const List = styled.div`
-  width: 300px;
+  width: 250px;
   min-height: 300px;
   max-height: auto;
   align-items: center;
@@ -92,7 +90,7 @@ const List = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 250px;
   height: 85%;
   padding: 0 0px 50px;
 `;

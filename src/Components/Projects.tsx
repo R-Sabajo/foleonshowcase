@@ -12,7 +12,7 @@ export const Projects = () => {
 };
 
 export const Container = styled.div`
-  width: 300px;
+  width: 250px;
   height: 100%;
   overflow: hidden;
   grid-area: projects;

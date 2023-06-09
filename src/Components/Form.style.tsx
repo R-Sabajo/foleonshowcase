@@ -43,11 +43,15 @@ export const SearchField = styled.input`
   background-color: ${props => props.theme};
   color: ${props => props.color};
   border-radius: 25px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0px 15px;
   margin-top: 5px;
 
   ::placeholder {
     color: var(--Grey-Blue);
+  }
+
+  :focus {
+    outline: none;
   }
 `;
