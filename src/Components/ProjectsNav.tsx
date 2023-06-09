@@ -4,13 +4,20 @@ import searchIcon from '../img/searchIcon.svg';
 import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import debounce from '../Api/debounce';
+import { filterQuery } from '../Api/filterQuery';
 
 export const ProjectsNav = () => {
   const { setUrl } = useContext(ProjectContext);
 
   // Make a function that sets the seachUrl from the searchfield value
   const handleSearch = (value: string) => {
-    const searchUrl: string = `https://api.foleon.com/magazine/title?page=1&limit=50&filter%5B0%5D%5Bfield%5D=name&filter%5B0%5D%5Btype%5D=like&filter%5B0%5D%5Bvalue%5D=%${value}%`;
+    const searchUrl: string = `https://api.foleon.com/magazine/title?${filterQuery(
+      1,
+      100,
+      'name',
+      'like',
+      value
+    )}`;
 
     setUrl(
       !value

@@ -48,6 +48,9 @@ devDependencies:
   '@babel/plugin-proposal-private-property-in-object':
     specifier: ^7.21.10
     version: 7.21.10(@babel/core@7.22.1)
+  '@types/qs':
+    specifier: ^6.9.7
+    version: 6.9.7
   '@types/styled-components':
     specifier: ^5.1.26
     version: 5.1.26
@@ -2573,7 +2576,6 @@ packages:
 
   /@types/qs@6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
-    dev: false
 
   /@types/range-parser@1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}

@@ -15,22 +15,26 @@ export const ProjectList: any = () => {
   return (
     <Container>
       <List>
-        {projects?.map((project: any) => (
-          <Li
-            key={project.id}
-            isSelected={project.id === currentProject}
-            onClick={() => handleClick(project.id)}
-          >
-            <Title>
-              <Icon
-                src={project.id === currentProject ? folderBlue : folder}
-                alt="folder icon"
-              />
-              {project.name}
-            </Title>
-            <Count>{project.count}</Count>
-          </Li>
-        ))}
+        {projects.length > 0 ? (
+          projects?.map((project: any) => (
+            <Li
+              key={project.id}
+              isSelected={project.id === currentProject}
+              onClick={() => handleClick(project.id)}
+            >
+              <Title>
+                <Icon
+                  src={project.id === currentProject ? folderBlue : folder}
+                  alt="folder icon"
+                />
+                {project.name}
+              </Title>
+              <Count>{project.count}</Count>
+            </Li>
+          ))
+        ) : (
+          <Li isSelected={false}>No projects found</Li>
+        )}
       </List>
     </Container>
   );
@@ -66,12 +70,14 @@ const Icon = styled.img`
 `;
 
 const Title = styled.h3`
+  display: flex;
+  width: 170px;
+  align-items: center;
   font-size: 16px;
   font-weight: 400;
 `;
 
 const Count = styled.h3`
-  justify-self: flex-end;
   font-size: 16px;
   font-weight: 400;
 `;

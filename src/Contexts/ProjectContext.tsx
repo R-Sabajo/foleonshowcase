@@ -77,7 +77,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
           }));
 
           setProjects(projectData);
-          setCurrentProject(projectData[0]?.id);
+          // setCurrentProject(projectData[0]?.id);
         } catch (error: any) {
           console.log(error.message);
           setProjects([]);
