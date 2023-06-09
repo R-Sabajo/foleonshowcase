@@ -24,7 +24,7 @@ export const ProjectInfo: React.FC = () => {
             <h2>{data?.name}</h2>
           </Title>
           <Created>
-            <p>Created</p>
+            <DateTitle>Created</DateTitle>
             <Date>{dateConstructer(data?.created_on)}</Date>
           </Created>
         </>
@@ -58,6 +58,7 @@ const Title = styled.div`
 
   h2 {
     font-weight: 400;
+    font-size: 24px;
   }
 `;
 
@@ -71,13 +72,14 @@ const Created = styled.div`
   justify-content: space-around;
   width: 100px;
   height: 40px;
-  p {
-    font-size: 13px;
-    color: var(--Grey-Blue);
-  }
 `;
 
+const DateTitle = styled.p`
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Grey-Blue);
+`;
 const Date = styled.p`
-  font-size: 17px;
+  font-size: 14px;
   color: var(--Light-Grey);
 `;

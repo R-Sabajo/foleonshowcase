@@ -1,11 +1,8 @@
-export const dateConstructer = (rawdate: any) => {
-  let dateObj = new Date(rawdate);
-  let options: any = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
+import { format } from 'date-fns';
+import { enGB } from 'date-fns/locale';
 
-  let date = dateObj.toLocaleDateString('en-US', options);
-  return date;
+export const dateConstructer = (dateString: string): string => {
+  const date = new Date(dateString);
+  const formattedDate = format(date, 'd MMMM yyyy', { locale: enGB });
+  return formattedDate;
 };
