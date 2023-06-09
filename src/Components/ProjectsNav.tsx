@@ -3,8 +3,8 @@ import { InputLabel, SearchField } from './Form.style';
 import searchIcon from '../img/searchIcon.svg';
 import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
-import debounce from '../Api/debounce';
-import { filterQuery } from '../Api/filterQuery';
+import debounce from '../Helpers/debounce';
+import { filterQuery } from '../Helpers/filterQuery';
 
 export const ProjectsNav = () => {
   const { setUrl } = useContext(ProjectContext);

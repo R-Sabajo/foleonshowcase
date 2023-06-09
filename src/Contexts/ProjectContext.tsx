@@ -80,6 +80,9 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
             count: p._computed.editions_count,
             editions: p._links.self.href,
           }));
+          if (currentProject === 0) {
+            setCurrentProject(jsonData?._embedded.title[0].id);
+          }
 
           setProjects(projectData);
         } catch (error: any) {
@@ -92,7 +95,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
 
       fetchProjects();
     }
-  }, [token, setToken, url]);
+  }, [token, setToken, url, currentProject]);
 
   return (
     <ProjectContext.Provider
