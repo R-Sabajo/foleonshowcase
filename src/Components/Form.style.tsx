@@ -46,6 +46,7 @@ export const SearchField = styled.input`
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0px 15px;
   margin-top: 5px;
+  transition: box-shadow 350ms ease-out;
 
   ::placeholder {
     color: var(--Grey-Blue);
@@ -53,5 +54,6 @@ export const SearchField = styled.input`
 
   :focus {
     outline: none;
+    box-shadow: 0 0 13px 1px rgba(255, 255, 255, 0.5);
   }
 `;

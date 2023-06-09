@@ -75,10 +75,9 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
             count: p._computed.editions_count,
             editions: p._links.self.href,
           }));
-          const firstProject = jsonData?._embedded?.title[0].id;
 
           setProjects(projectData);
-          setCurrentProject(firstProject);
+          setCurrentProject(projectData[0]?.id);
         } catch (error: any) {
           console.log(error.message);
           setProjects([]);
