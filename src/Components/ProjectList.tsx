@@ -4,8 +4,8 @@ import folderBlue from '../img/folderBlue.svg';
 import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
 
-export const ProjectList: any = () => {
-  const { projects, currentProject, setCurrentProject } =
+export const ProjectList: React.FC = () => {
+  const { projects, currentProject, setCurrentProject, isLoading } =
     useContext(ProjectContext);
 
   const handleClick = (id: number) => {
@@ -15,7 +15,9 @@ export const ProjectList: any = () => {
   return (
     <Container>
       <List>
-        {projects.length > 0 ? (
+        {isLoading ? (
+          <Li isSelected={false}> Loading Projects...</Li>
+        ) : projects.length !== 0 ? (
           projects?.map((project: any) => (
             <Li
               key={project.id}
@@ -33,7 +35,7 @@ export const ProjectList: any = () => {
             </Li>
           ))
         ) : (
-          <Li isSelected={false}>No projects found</Li>
+          <Li isSelected={false}> No projects found</Li>
         )}
       </List>
     </Container>

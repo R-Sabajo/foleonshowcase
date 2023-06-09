@@ -11,11 +11,12 @@ export const Projects = () => {
   );
 };
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 250px;
   height: 100%;
   overflow: hidden;
   grid-area: projects;
+  box-shadow: 13px 0px 18px rgba(0, 0, 0, 0.25);
   background: linear-gradient(
     90deg,
     var(--Dark-Blue) 33.3%,

@@ -15,9 +15,9 @@ const Container = styled.div`
 const App: React.FC = () => {
   return (
     <AppProvider>
+      <GlobalStyle />
       <ProjectProvider>
         <Container>
-          <GlobalStyle />
           <LoginModal />
           <Main />
         </Container>

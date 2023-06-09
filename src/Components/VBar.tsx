@@ -8,7 +8,7 @@ export const VBar = () => {
   );
 };
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 60px;
   height: 100%;
   display: flex;

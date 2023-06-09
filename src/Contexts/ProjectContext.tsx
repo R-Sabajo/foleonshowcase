@@ -18,18 +18,22 @@ interface ProjectContextProps {
   projects: Project[];
   currentProject: number;
   url: string;
+  isLoading: boolean;
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
   setCurrentProject: React.Dispatch<React.SetStateAction<number>>;
   setUrl: React.Dispatch<React.SetStateAction<string>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ProjectContext = createContext<ProjectContextProps>({
   projects: [],
   currentProject: 0,
   url: '',
+  isLoading: true,
   setProjects: () => {},
   setCurrentProject: () => {},
   setUrl: () => {},
+  setIsLoading: () => {},
 });
 
 type ProjectProviderProps = {
@@ -40,6 +44,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   children,
 }) => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentProject, setCurrentProject] = useState<number>(0);
   const [url, setUrl] = useState<string>(
     'https://api.foleon.com/magazine/title?page=1&limit=50'
@@ -77,10 +82,11 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
           }));
 
           setProjects(projectData);
-          // setCurrentProject(projectData[0]?.id);
         } catch (error: any) {
           console.log(error.message);
           setProjects([]);
+        } finally {
+          setIsLoading(false);
         }
       };
 
@@ -93,6 +99,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
       value={{
         url,
         setUrl,
+        isLoading,
+        setIsLoading,
         projects,
         currentProject,
         setProjects,
