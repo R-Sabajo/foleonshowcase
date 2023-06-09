@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import folder from '../img/folder.svg';
 import folderBlue from '../img/folderBlue.svg';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
 
 export const ProjectList: any = () => {
