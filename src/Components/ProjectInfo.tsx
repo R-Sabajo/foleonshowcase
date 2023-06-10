@@ -3,32 +3,34 @@ import folder from '../img/folder.svg';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import { useContext } from 'react';
 import { dateConstructer } from '../Helpers/dateConstructer';
-import { useFetch } from '../Helpers/useFetch';
 
 export const ProjectInfo: React.FC = () => {
-  const { currentProject } = useContext(ProjectContext);
-  const { data, error, isLoading } = useFetch(
-    `https://api.foleon.com/v2/magazine/title/${currentProject}`
-  );
-
-  if (error) {
-    console.log(error);
-  }
+  const { currentProject, projects } = useContext(ProjectContext);
 
   return (
     <Container>
-      {!isLoading && (
-        <>
-          <Title>
-            <Icon src={folder} alt="folder icon" />
-            <h2>{data?.name}</h2>
-          </Title>
-          <Created>
-            <DateTitle>Created</DateTitle>
-            <Date>{dateConstructer(data?.created_on)}</Date>
-          </Created>
-        </>
-      )}
+      {currentProject !== 0 &&
+        projects?.map(
+          (project: any) =>
+            project.id === currentProject && (
+              <>
+                <Title>
+                  <Icon src={folder} alt="folder icon" />
+                  <h2>{project.name}</h2>
+                </Title>
+                <DatesDiv>
+                  <Created>
+                    <DateTitle>Created on</DateTitle>
+                    <Date>{dateConstructer(project.created_on)}</Date>
+                  </Created>
+                  <Created>
+                    <DateTitle>Affected on</DateTitle>
+                    <Date>{dateConstructer(project.affected_on)}</Date>
+                  </Created>
+                </DatesDiv>
+              </>
+            )
+        )}
     </Container>
   );
 };
@@ -79,6 +81,12 @@ const DateTitle = styled.p`
   font-weight: 600;
   color: var(--Grey-Blue);
 `;
+const DatesDiv = styled.div`
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+`;
+
 const Date = styled.p`
   font-size: 14px;
   color: var(--Light-Grey);

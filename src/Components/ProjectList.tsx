@@ -5,11 +5,11 @@ import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
 
 export const ProjectList: React.FC = () => {
-  const { projects, currentProject, setCurrentProject, isLoading } =
+  const { searchProjects, currentProject, setCurrentProject, isLoading } =
     useContext(ProjectContext);
 
   const handleClick = (id: number) => {
-    setCurrentProject(id === currentProject ? id : id);
+    setCurrentProject(id);
   };
 
   return (
@@ -17,8 +17,8 @@ export const ProjectList: React.FC = () => {
       <List>
         {isLoading ? (
           <Li isSelected={false}> Loading Projects...</Li>
-        ) : projects.length !== 0 ? (
-          projects?.map((project: any) => (
+        ) : searchProjects.length !== 0 ? (
+          searchProjects?.map((project: any) => (
             <Li
               key={project.id}
               isSelected={project.id === currentProject}

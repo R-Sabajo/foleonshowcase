@@ -7,7 +7,7 @@ import debounce from '../Helpers/debounce';
 import { filterQuery } from '../Helpers/filterQuery';
 
 export const ProjectsNav = () => {
-  const { setUrl } = useContext(ProjectContext);
+  const { setSearchUrl } = useContext(ProjectContext);
 
   // Make a function that sets the seachUrl from the searchfield value
   const handleSearch = (value: string) => {
@@ -19,7 +19,7 @@ export const ProjectsNav = () => {
       value
     )}`;
 
-    setUrl(
+    setSearchUrl(
       !value
         ? 'https://api.foleon.com/magazine/title?page=1&limit=50'
         : searchUrl
