@@ -23,6 +23,7 @@ const Container = styled.div`
     'doclist'
     'pagination';
 
+  overflow-y: auto;
   width: 100%;
   height: 100%;
   grid-area: docs;

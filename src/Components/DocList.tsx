@@ -59,13 +59,14 @@ const DocGrid = styled.div`
 
   gap: 20px 30px;
   width: 100%;
-  min-height: 450px;
+  min-height: 400px;
   max-height: auto;
+  padding: 10px 0 0;
   align-items: center;
   ::-webkit-scrollbar {
     display: none;
   }
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const DocDiv = styled.div<{ isSelected: boolean }>`
