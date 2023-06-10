@@ -1,43 +1,11 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
-import { ProjectContext } from '../Contexts/ProjectContext';
+import { DocContext } from '../Contexts/DocContext';
 
 export const DocList: React.FC = () => {
-  const { currentProject } = useContext(ProjectContext);
+  const handleClick = () => {};
 
-  //   const handleClick = (id: number) => {
-  //     setCurrentProject(id);
-  //   };
-
-  return (
-    <Container>
-      <List>
-        DOCLIST
-        {/* {isLoading ? (
-          <Li isSelected={false}> Loading Projects...</Li>
-        ) : searchProjects.length !== 0 ? (
-          searchProjects?.map((project: any) => (
-            <Li
-              key={project.id}
-              isSelected={project.id === currentProject}
-              onClick={() => handleClick(project.id)}
-            >
-              <Title>
-                <Icon
-                  src={project.id === currentProject ? folderBlue : folder}
-                  alt="folder icon"
-                />
-                {project.name}
-              </Title>
-              <Count>{project.count}</Count>
-            </Li>
-          ))
-        ) : (
-          <Li isSelected={false}> No projects found</Li>
-        )} */}
-      </List>
-    </Container>
-  );
+  return <Container>DOCLIST</Container>;
 };
 
 const Li = styled.div<{ isSelected: boolean }>`
@@ -75,22 +43,6 @@ const Title = styled.h3`
   align-items: center;
   font-size: 16px;
   font-weight: 400;
-`;
-
-const Count = styled.h3`
-  font-size: 16px;
-  font-weight: 400;
-`;
-
-const List = styled.div`
-  width: 250px;
-  min-height: 300px;
-  max-height: auto;
-  align-items: center;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  overflow: scroll;
 `;
 
 const Container = styled.div`

@@ -7,7 +7,17 @@ export const FoleonLogo = () => {
   const month = thisDate.getMonth();
   return (
     <Container>
-      <img width="30" src={month === 5 ? PrideLogo : Logo} alt="Foleon logo" />
+      <a
+        href="https://www.foleon.com"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        <img
+          width="30"
+          src={month === 5 ? PrideLogo : Logo}
+          alt="Foleon logo"
+        />
+      </a>
     </Container>
   );
 };

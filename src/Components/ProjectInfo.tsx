@@ -8,12 +8,12 @@ export const ProjectInfo: React.FC = () => {
   const { currentProject, projects } = useContext(ProjectContext);
 
   return (
-    <Container>
+    <>
       {currentProject !== 0 &&
         projects?.map(
           (project: any) =>
             project.id === currentProject && (
-              <>
+              <Container key={project.id}>
                 <Title>
                   <Icon src={folder} alt="folder icon" />
                   <h2>{project.name}</h2>
@@ -28,10 +28,10 @@ export const ProjectInfo: React.FC = () => {
                     <Date>{dateConstructer(project.affected_on)}</Date>
                   </SubDiv>
                 </DatesDiv>
-              </>
+              </Container>
             )
         )}
-    </Container>
+    </>
   );
 };
 
