@@ -40,7 +40,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0 20px;
+  padding: 0 40px;
   grid-area: projectinfo;
   color: var(--Light-Grey);
   box-shadow: 0px 13px 18px rgba(0, 0, 0, 0.25);
@@ -57,6 +57,7 @@ const Title = styled.div`
   font-size: 18px;
   align-items: center;
   height: 40px;
+  margin-right: 50px;
 
   h2 {
     font-weight: 400;
@@ -83,7 +84,7 @@ const DateTitle = styled.p`
 `;
 const DatesDiv = styled.div`
   display: flex;
-  width: 250px;
+  width: 220px;
   justify-content: space-between;
 `;
 

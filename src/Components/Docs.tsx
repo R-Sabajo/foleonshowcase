@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { ProjectInfo } from './ProjectInfo';
 import { DocList } from './DocList';
+import { DocsNav } from './DocsNav';
 
 export const Docs = () => {
   return (
     <Container>
       <ProjectInfo />
-      <h1>DocsNav</h1>
+      <DocsNav />
       <DocList />
       <h1>Pagination</h1>
     </Container>

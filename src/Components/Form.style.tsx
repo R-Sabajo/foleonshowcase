@@ -11,6 +11,7 @@ export const InputField = styled.input`
 `;
 
 export const InputLabel = styled.label`
+  height: 50px;
   position: relative;
   font-size: 15px;
   font-weight: 600;

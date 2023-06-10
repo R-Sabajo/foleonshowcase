@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useContext, useEffect } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
+import previewIcon from '../img/previewIcon.svg';
 
 export const DocList: React.FC = () => {
   const { docs, setDocsUrl } = useContext(DocContext);
@@ -28,7 +29,9 @@ export const DocList: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={doc.preview}
-                ></Preview>
+                >
+                  <img src={previewIcon} alt="preview" />
+                </Preview>
               </DocCard>
               <Title>{doc.name}</Title>
             </DocDiv>
@@ -41,7 +44,7 @@ export const DocList: React.FC = () => {
 
 const Container = styled.div`
   width: 100%;
-  padding: 40px 50px 0;
+  padding: 40px 40px 0;
   display: flex;
   flex-direction: column;
   height: 530px;
@@ -97,10 +100,10 @@ const DocCard = styled.div`
   padding: 5px 7px;
   border-radius: 5px;
   background-color: #fff;
-  cursor: pointer;
-  user-select: none;
   transition: all 150ms ease-in-out;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
+  cursor: pointer;
+  user-select: none;
 
   :hover {
     transform: translateY(-10px);
@@ -115,10 +118,18 @@ const Screenshot = styled.div<{ source: string }>`
 `;
 
 const Preview = styled.a`
-  background-color: var(--Light-Grey);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  opacity: 0.2;
+  transition: opacity 200ms ease-out;
+
+  :hover {
+    opacity: 1;
+  }
 `;
 
 const Title = styled.p`
