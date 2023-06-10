@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from 'react';
 import { AppContext } from './AppContext';
+import { DocContext } from './DocContext';
 
 type Project = {
   id: number;
@@ -60,6 +61,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const [url, setUrl] = useState<string>(
     'https://api.foleon.com/v2/magazine/title'
   );
+  const { docsUrl, setDocsUrl } = useContext(DocContext);
   const [searchUrl, setSearchUrl] = useState<string>(
     'https://api.foleon.com/magazine/title'
   );
@@ -114,6 +116,10 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
             setCurrentProject(jsonData?._embedded.title[0].id);
           }
           setProjects(projectData);
+          setDocsUrl(
+            'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
+              currentProject
+          );
           setSearchProjects(searchProjectData);
         } catch (error: any) {
           console.log(error.message);

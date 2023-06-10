@@ -25,14 +25,14 @@ interface DocContextProps {
   searchDocs: Doc[];
   currentDoc: number;
   project: number;
-  url: string;
+  docsUrl: string;
   searchUrl: string;
   isLoading: boolean;
   setDocs: React.Dispatch<React.SetStateAction<Doc[]>>;
   setSearchDocs: React.Dispatch<React.SetStateAction<Doc[]>>;
   setCurrentDoc: React.Dispatch<React.SetStateAction<number>>;
   setProject: React.Dispatch<React.SetStateAction<number>>;
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  setDocsUrl: React.Dispatch<React.SetStateAction<string>>;
   setSearchUrl: React.Dispatch<React.SetStateAction<string>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -42,14 +42,14 @@ export const DocContext = createContext<DocContextProps>({
   searchDocs: [],
   currentDoc: 0,
   project: 0,
-  url: '',
+  docsUrl: '',
   searchUrl: '',
   isLoading: true,
   setDocs: () => {},
   setSearchDocs: () => {},
   setCurrentDoc: () => {},
   setProject: () => {},
-  setUrl: () => {},
+  setDocsUrl: () => {},
   setSearchUrl: () => {},
   setIsLoading: () => {},
 });
@@ -62,7 +62,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
   const { currentProject } = useContext(ProjectContext);
 
   const [project, setProject] = useState<number>(currentProject);
-  const [url, setUrl] = useState<string>(
+  const [docsUrl, setDocsUrl] = useState<string>(
     'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
       project
   );
@@ -87,7 +87,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
         };
 
         try {
-          const response = await fetch(url, options);
+          const response = await fetch(docsUrl, options);
           const response2 = await fetch(searchUrl, options);
 
           if (!response.ok && !response2.ok) {
@@ -135,7 +135,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
           // setSearchDocs(searchDocData);
         } catch (error: any) {
           console.log(error.message);
-          // setDocs([]);
+          setDocs([]);
           // setSearchDocs([]);
         } finally {
           setIsLoading(false);
@@ -143,13 +143,21 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
       };
       fetchDocs();
     }
-  }, [token, setToken, url, searchUrl, currentDoc, currentProject, project]);
+  }, [
+    token,
+    setToken,
+    docsUrl,
+    searchUrl,
+    currentDoc,
+    currentProject,
+    project,
+  ]);
 
   return (
     <DocContext.Provider
       value={{
-        url,
-        setUrl,
+        docsUrl,
+        setDocsUrl,
         searchUrl,
         setSearchUrl,
         isLoading,

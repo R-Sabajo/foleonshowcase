@@ -8,12 +8,12 @@ import { DocContext } from '../Contexts/DocContext';
 export const ProjectList: React.FC = () => {
   const { searchProjects, currentProject, setCurrentProject, isLoading } =
     useContext(ProjectContext);
-  const { setUrl } = useContext(DocContext);
+  const { setDocsUrl } = useContext(DocContext);
 
   const handleClick = (id: number) => {
     setCurrentProject(id);
     // set doclist url to the selected project
-    setUrl(
+    setDocsUrl(
       'https://api.foleon.com/magazine/edition?filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
         id
     );

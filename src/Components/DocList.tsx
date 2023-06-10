@@ -32,13 +32,34 @@ export const DocList: React.FC = () => {
   );
 };
 
+const Container = styled.div`
+  width: 100%;
+  padding: 40px 50px 0;
+  display: flex;
+  flex-direction: column;
+  height: 530px;
+  overflow: hidden;
+`;
+
 const DocGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 20px 50px;
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  @media (min-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  gap: 20px 30px;
   width: 100%;
-  min-height: 300px;
+  min-height: 450px;
   max-height: auto;
   align-items: center;
   ::-webkit-scrollbar {
@@ -47,12 +68,15 @@ const DocGrid = styled.div`
   overflow-y: scroll;
 `;
 
-const Container = styled.div`
-  width: 100%;
-  padding: 20px 50px 0;
+const DocDiv = styled.div<{ isSelected: boolean }>`
+  color: ${props =>
+    props.isSelected ? 'var(--Dark-Blue)' : 'var(--Grey-Blue)'};
   display: flex;
   flex-direction: column;
-  height: 99%;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 230px;
 `;
 
 const DocCard = styled.div`
@@ -65,23 +89,14 @@ const DocCard = styled.div`
   padding: 5px 7px;
   border-radius: 5px;
   background-color: #fff;
-`;
-
-const DocDiv = styled.div<{ isSelected: boolean }>`
-  background-color: 'var(--Light-Grey)';
-  color: ${props =>
-    props.isSelected ? 'var(--Dark-Blue)' : 'var(--Grey-Blue)'};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 210px;
-  height: 230px;
-
   cursor: pointer;
   user-select: none;
+  transition: all 150ms ease-in-out;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
 
   :hover {
+    transform: translateY(-10px);
+    box-shadow: 0 40px 44px -30px rgba(0, 0, 0, 0.35);
   }
 `;
 
@@ -102,7 +117,7 @@ const Title = styled.p`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 40px;
-  font-size: 15px;
+  height: 50px;
+  font-size: 17px;
   font-weight: 500;
 `;
