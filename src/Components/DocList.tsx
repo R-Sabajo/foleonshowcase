@@ -1,11 +1,18 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
 
 export const DocList: React.FC = () => {
-  const { docs } = useContext(DocContext);
+  const { docs, setDocsUrl } = useContext(DocContext);
   const { currentProject, isLoading } = useContext(ProjectContext);
+
+  useEffect(() => {
+    setDocsUrl(
+      'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
+        currentProject
+    );
+  }, [currentProject, setDocsUrl]);
 
   return (
     <Container>
@@ -14,7 +21,7 @@ export const DocList: React.FC = () => {
           <DocDiv isSelected={false}> Loading Docs...</DocDiv>
         ) : (
           docs?.map((doc: any) => (
-            <DocDiv isSelected={false}>
+            <DocDiv key={doc.id} isSelected={false}>
               <DocCard>
                 <Screenshot source={doc.screenshot} />
                 <Preview

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Header } from './Header';
 import { VBar } from './VBar';
 import { Projects } from './Projects';
-import { Docs } from './Project';
+import { Docs } from './Docs';
 import { AppContext } from '../Contexts/AppContext';
 import { useContext } from 'react';
 
