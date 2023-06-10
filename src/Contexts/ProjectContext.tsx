@@ -100,7 +100,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
             name: p.name,
             created_on: p.created_on,
             affected_on: p.affected_on,
-            editions: p._links.self.href,
+            editions: p._embedded.editions._links.self.href,
           }));
 
           const searchProjectData = jsonData2?._embedded.title.map(

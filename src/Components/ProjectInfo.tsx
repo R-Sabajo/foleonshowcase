@@ -19,14 +19,14 @@ export const ProjectInfo: React.FC = () => {
                   <h2>{project.name}</h2>
                 </Title>
                 <DatesDiv>
-                  <Created>
+                  <SubDiv>
                     <DateTitle>Created on</DateTitle>
                     <Date>{dateConstructer(project.created_on)}</Date>
-                  </Created>
-                  <Created>
+                  </SubDiv>
+                  <SubDiv>
                     <DateTitle>Affected on</DateTitle>
                     <Date>{dateConstructer(project.affected_on)}</Date>
-                  </Created>
+                  </SubDiv>
                 </DatesDiv>
               </>
             )
@@ -68,7 +68,7 @@ const Icon = styled.img`
   margin-right: 15px;
 `;
 
-const Created = styled.div`
+const SubDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
