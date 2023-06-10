@@ -59,16 +59,18 @@ type DocProviderProps = {
 };
 
 export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
+  const { currentProject } = useContext(ProjectContext);
+
+  const [project, setProject] = useState<number>(currentProject);
+  const [url, setUrl] = useState<string>(
+    'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
+      project
+  );
   const [docs, setDocs] = useState<Doc[]>([]);
   const [searchDocs, setSearchDocs] = useState<Doc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentDoc, setCurrentDoc] = useState<number>(0);
-  const { currentProject } = useContext(ProjectContext);
-  const [project, setProject] = useState<number>(0);
-  const [url, setUrl] = useState<string>(
-    'https://api.foleon.com/magazine/edition?filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
-      project
-  );
+
   const [searchUrl, setSearchUrl] = useState<string>('');
   const { token, setToken } = useContext(AppContext);
 

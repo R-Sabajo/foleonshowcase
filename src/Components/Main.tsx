@@ -22,6 +22,10 @@ export const Main: React.FC = () => {
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   display: grid;
   grid-template-columns: 60px 250px 1fr;
   grid-template-rows: 60px 1fr;

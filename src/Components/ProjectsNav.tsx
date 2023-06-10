@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { InputLabel, SearchField } from './Form.style';
+import { InputLabel } from './Form.style';
 import searchIcon from '../img/searchIcon.svg';
 import { useContext } from 'react';
 import { ProjectContext } from '../Contexts/ProjectContext';
@@ -19,11 +19,7 @@ export const ProjectsNav = () => {
       value
     )}`;
 
-    setSearchUrl(
-      !value
-        ? 'https://api.foleon.com/magazine/title?page=1&limit=50'
-        : searchUrl
-    );
+    setSearchUrl(!value ? 'https://api.foleon.com/magazine/title' : searchUrl);
   };
   // Wrap it with a debouncer
   const debouncedSearch = debounce(handleSearch, 333);
@@ -37,20 +33,21 @@ export const ProjectsNav = () => {
     <Container>
       <Title>Projects</Title>
       <InputLabel>
+        <Icon src={searchIcon} alt="search icon" />
         <SearchField
           onChange={handleChange}
           color="var(--Light-Grey)"
           theme="var(--Dark-Blue)"
           placeholder="search projects"
         />
-        <Icon src={searchIcon} alt="search icon" />
       </InputLabel>
     </Container>
   );
 };
 const Icon = styled.img`
   position: absolute;
-  transform: translate(-35px, 14px);
+  transform: translate(165px, 14px);
+  z-index: 10;
 `;
 
 const Container = styled.div`
@@ -69,4 +66,26 @@ const Title = styled.h2`
   padding: 0 15px;
   font-size: 20px;
   font-weight: 500;
+`;
+
+const SearchField = styled.input`
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: ${props => props.theme};
+  color: ${props => props.color};
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0px 40px 0px 15px;
+  margin-top: 5px;
+  transition: box-shadow 350ms ease-out;
+
+  ::placeholder {
+    color: var(--Grey-Blue);
+  }
+
+  :focus {
+    outline: none;
+    box-shadow: 0 0 13px 1px rgba(255, 255, 255, 0.5);
+  }
 `;

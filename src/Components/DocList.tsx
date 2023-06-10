@@ -1,54 +1,108 @@
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { DocContext } from '../Contexts/DocContext';
+import { ProjectContext } from '../Contexts/ProjectContext';
 
 export const DocList: React.FC = () => {
-  const handleClick = () => {};
+  const { docs } = useContext(DocContext);
+  const { currentProject, isLoading } = useContext(ProjectContext);
 
-  return <Container>DOCLIST</Container>;
+  return (
+    <Container>
+      <DocGrid>
+        {isLoading ? (
+          <DocDiv isSelected={false}> Loading Docs...</DocDiv>
+        ) : (
+          docs?.map((doc: any) => (
+            <DocDiv isSelected={false}>
+              <DocCard>
+                <Screenshot source={doc.screenshot} />
+                <Preview
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={doc.preview}
+                ></Preview>
+              </DocCard>
+              <Title>{doc.name}</Title>
+            </DocDiv>
+          ))
+        )}
+      </DocGrid>
+    </Container>
+  );
 };
 
-const Li = styled.div<{ isSelected: boolean }>`
-  background: ${props => (props.isSelected ? 'var(--Light-Grey)' : 'inherit')};
-  color: ${props => (props.isSelected ? 'var(--Dark-Blue)' : 'inherit')};
-  display: flex;
-  justify-content: space-between;
+const DocGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px 50px;
+  width: 100%;
+  min-height: 300px;
+  max-height: auto;
   align-items: center;
-  width: 250px;
-  height: 60px;
-  padding: 0 25px;
-  border-bottom: 1px solid var(--Light-Blue);
-  cursor: pointer;
-  user-select: none;
-
-  :last-child {
-    border-bottom: none;
+  ::-webkit-scrollbar {
+    display: none;
   }
-
-  :hover {
-    background: ${props =>
-      props.isSelected ? 'var(--Light-Grey)' : 'var(--Light-Blue)'};
-  }
-`;
-
-const Icon = styled.img`
-  width: 20px;
-  height: 16px;
-  margin-right: 15px;
-`;
-
-const Title = styled.h3`
-  display: flex;
-  width: 170px;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 400;
+  overflow-y: scroll;
 `;
 
 const Container = styled.div`
+  width: 100%;
+  padding: 20px 50px 0;
   display: flex;
   flex-direction: column;
-  width: 250px;
-  height: 85%;
-  padding: 0 0px 50px;
+  height: 99%;
+`;
+
+const DocCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 180px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background-color: #fff;
+`;
+
+const DocDiv = styled.div<{ isSelected: boolean }>`
+  background-color: 'var(--Light-Grey)';
+  color: ${props =>
+    props.isSelected ? 'var(--Dark-Blue)' : 'var(--Grey-Blue)'};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 210px;
+  height: 230px;
+
+  cursor: pointer;
+  user-select: none;
+
+  :hover {
+  }
+`;
+
+const Screenshot = styled.div<{ source: string }>`
+  background: center / cover no-repeat url('${props => props.source}');
+  width: 100%;
+  height: 120px;
+`;
+
+const Preview = styled.a`
+  background-color: var(--Light-Grey);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+`;
+
+const Title = styled.p`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
 `;

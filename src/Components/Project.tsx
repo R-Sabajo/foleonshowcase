@@ -16,7 +16,7 @@ export const Docs = () => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px 111px 1fr 60px;
+  grid-template-rows: 60px 80px 1fr 50px;
   grid-template-areas:
     'projectinfo'
     'docsnav'
@@ -25,7 +25,6 @@ const Container = styled.div`
 
   width: 100%;
   height: 100%;
-  overflow: hidden;
   grid-area: docs;
   background: var(--Light-Grey);
   color: var(--Dark-Blue);

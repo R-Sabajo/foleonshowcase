@@ -11,6 +11,7 @@ export const InputField = styled.input`
 `;
 
 export const InputLabel = styled.label`
+  position: relative;
   font-size: 15px;
   font-weight: 600;
   color: var(--Dark-Blue);
@@ -34,26 +35,5 @@ export const Button = styled.button`
 
   :hover {
     background-color: rgb(0, 159, 230);
-  }
-`;
-
-export const SearchField = styled.input`
-  width: 100%;
-  height: 40px;
-  background-color: ${props => props.theme};
-  color: ${props => props.color};
-  border-radius: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0px 15px;
-  margin-top: 5px;
-  transition: box-shadow 350ms ease-out;
-
-  ::placeholder {
-    color: var(--Grey-Blue);
-  }
-
-  :focus {
-    outline: none;
-    box-shadow: 0 0 13px 1px rgba(255, 255, 255, 0.5);
   }
 `;
