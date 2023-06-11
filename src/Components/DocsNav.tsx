@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { InputLabel } from './Form.style';
 import searchIcon from '../img/searchIcon.svg';
 import { useContext } from 'react';
 import { DocContext } from '../Contexts/DocContext';
@@ -112,13 +111,17 @@ const SearchField = styled.input`
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0px 40px 0px 15px;
   margin-top: 5px;
-  transition: box-shadow 250ms ease-out;
+  transition: all 250ms ease-out;
 
   ::placeholder {
     color: var(--Grey-Blue);
   }
   :disabled {
     background-color: var(--Dark-Grey);
+    opacity: 0;
+  }
+  :hover {
+    opacity: 1;
   }
 
   :focus {
@@ -127,8 +130,21 @@ const SearchField = styled.input`
   }
 `;
 
+const InputLabel = styled.label`
+  height: 50px;
+  position: relative;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--Dark-Blue);
+
+  :hover input {
+    opacity: 1;
+  }
+`;
+
 const Icon = styled.img`
   position: absolute;
   transform: translate(195px, 14px);
   z-index: 10;
+  opacity: 1;
 `;
