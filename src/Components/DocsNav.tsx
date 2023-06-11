@@ -80,26 +80,41 @@ export const DocsNav = () => {
     <Container>
       <NavDiv>
         <Title>Foleon Docs</Title>
-        <Sort
-          onChange={event => handleSort(event)}
-          name="sort"
-          id="sort-select"
-          value={sort}
-        >
-          <option value="affected_on">Last Edited</option>
-          <option value="name">A-Z</option>
-        </Sort>
-        <Filter
-          value={filter}
-          onChange={event => handleFilter(event)}
-          name="filter"
-          id="filter-select"
-        >
-          <option value="">Show All</option>
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
-          <option value="offline">Offline</option>
-        </Filter>
+        <SelectLabel htmlFor="sort-select">
+          Sort
+          <Sort
+            onChange={event => handleSort(event)}
+            name="sort"
+            id="sort-select"
+            value={sort}
+          >
+            <option value="affected_on">Last Edited</option>
+            <option value="name">A-Z</option>
+          </Sort>
+        </SelectLabel>
+        <SelectLabel htmlFor="filter-select">
+          Filter
+          <Filter
+            disabled={currentProject !== 0}
+            value={filter}
+            onChange={event => handleFilter(event)}
+            name="filter"
+            id="filter-select"
+          >
+            {currentProject !== 0 ? (
+              <>
+                <option value="">Deselect Project</option>
+              </>
+            ) : (
+              <>
+                <option value="">Show All</option>
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+                <option value="offline">Offline</option>
+              </>
+            )}
+          </Filter>
+        </SelectLabel>
 
         <InputLabel>
           <Icon src={searchIcon} alt="search icon" />
@@ -152,17 +167,27 @@ const Title = styled.h2`
 `;
 
 const Filter = styled.select`
-  width: 100px;
+  width: 150px;
   height: 40px;
+  margin-left: 15px;
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0px 0px 0px 5px;
   transition: all 250ms ease-out;
+
+  :disabled {
+    background-color: var(--Dark-Grey);
+    opacity: 0;
+  }
+  :hover {
+    opacity: 1;
+  }
 `;
 const Sort = styled.select`
-  width: 100px;
+  width: 150px;
   height: 40px;
+  margin-left: 15px;
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -205,6 +230,20 @@ const InputLabel = styled.label`
   font-size: 15px;
   font-weight: 600;
   color: var(--Dark-Blue);
+
+  :hover input {
+    opacity: 1;
+  }
+`;
+
+const SelectLabel = styled.label`
+  display: flex;
+  align-items: center;
+  height: 50px;
+  position: relative;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--Grey-Blue);
 
   :hover input {
     opacity: 1;

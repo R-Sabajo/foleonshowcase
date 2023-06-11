@@ -80,6 +80,7 @@ const DocDiv = styled.div<{ isSelected: boolean }>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 300px;
   height: 230px;
 `;
 
