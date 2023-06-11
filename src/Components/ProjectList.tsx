@@ -11,14 +11,15 @@ export const ProjectList: React.FC = () => {
   const { setDocsUrl } = useContext(DocContext);
 
   const handleClick = (id: number) => {
-    setCurrentProject(id);
+    setCurrentProject(currentProject === id ? 0 : id);
     // set doclist url to the selected project
     setDocsUrl(
-      'https://api.foleon.com/magazine/edition?filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
-        id
+      currentProject === id
+        ? 'https://api.foleon.com/magazine/edition?page=1&limit=8'
+        : 'https://api.foleon.com/magazine/edition?filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
+            id
     );
   };
-
   return (
     <Container>
       <List>

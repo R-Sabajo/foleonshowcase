@@ -1,19 +1,12 @@
 import styled from 'styled-components';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import previewIcon from '../img/previewIcon.svg';
 
 export const DocList: React.FC = () => {
-  const { docs, setDocsUrl } = useContext(DocContext);
-  const { currentProject, isLoading } = useContext(ProjectContext);
-
-  useEffect(() => {
-    setDocsUrl(
-      'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
-        currentProject
-    );
-  }, [currentProject, setDocsUrl]);
+  const { docs } = useContext(DocContext);
+  const { isLoading } = useContext(ProjectContext);
 
   return (
     <Container>

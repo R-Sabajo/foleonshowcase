@@ -23,8 +23,7 @@ export const DocsNav = () => {
 
     setDocsUrl(
       !value
-        ? 'https://api.foleon.com/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
-            currentProject
+        ? 'https://api.foleon.com/magazine/edition?page=1&limit=8'
         : searchUrl
     );
   };
@@ -56,10 +55,15 @@ export const DocsNav = () => {
         <InputLabel>
           <Icon src={searchIcon} alt="search icon" />
           <SearchField
+            disabled={currentProject !== 0}
             onChange={handleChange}
             color="var(--Dark-Blue)"
             theme="#fff"
-            placeholder="search all docs"
+            placeholder={
+              currentProject !== 0
+                ? 'Deselect project to enable'
+                : 'Search all docs'
+            }
           />
         </InputLabel>
       </NavDiv>
@@ -100,7 +104,7 @@ const Title = styled.h2`
 
 const SearchField = styled.input`
   position: relative;
-  width: 200px;
+  width: 230px;
   height: 40px;
   background-color: ${props => props.theme};
   color: ${props => props.color};
@@ -113,6 +117,9 @@ const SearchField = styled.input`
   ::placeholder {
     color: var(--Grey-Blue);
   }
+  :disabled {
+    background-color: var(--Dark-Grey);
+  }
 
   :focus {
     outline: none;
@@ -122,6 +129,6 @@ const SearchField = styled.input`
 
 const Icon = styled.img`
   position: absolute;
-  transform: translate(165px, 14px);
+  transform: translate(195px, 14px);
   z-index: 10;
 `;

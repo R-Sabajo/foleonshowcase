@@ -112,17 +112,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
               count: p._computed.editions_count,
             })
           );
-          if (currentProject === 0) {
-            setCurrentProject(jsonData?._embedded.title[0].id);
-            setTimeout(() => {
-              setDocsUrl(
-                'https://api.foleon.com/v2/magazine/edition?page=1&limit=8&filter%5B0%5D%5Bfield%5D=title&filter%5B0%5D%5Btype%5D=eq&filter%5B0%5D%5Bvalue%5D=' +
-                  currentProject
-              );
-            }, 3000);
-          }
-          setProjects(projectData);
 
+          setProjects(projectData);
           setSearchProjects(searchProjectData);
         } catch (error: any) {
           console.log(error.message);

@@ -8,12 +8,12 @@ export const ProjectInfo: React.FC = () => {
   const { currentProject, projects } = useContext(ProjectContext);
 
   return (
-    <>
+    <Container>
       {currentProject !== 0 &&
         projects?.map(
           (project: any) =>
             project.id === currentProject && (
-              <Container key={project.id}>
+              <ProjectInfoDiv key={project.id}>
                 <Title>
                   <Icon src={folder} alt="folder icon" />
                   <h2>{project.name}</h2>
@@ -28,10 +28,10 @@ export const ProjectInfo: React.FC = () => {
                     <Date>{dateConstructer(project.affected_on)}</Date>
                   </SubDiv>
                 </DatesDiv>
-              </Container>
+              </ProjectInfoDiv>
             )
         )}
-    </>
+    </Container>
   );
 };
 
@@ -50,6 +50,14 @@ const Container = styled.div`
     var(--Light-Blue) 100%
   );
   z-index: 2;
+`;
+
+const ProjectInfoDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--Light-Grey);
 `;
 
 const Title = styled.div`
