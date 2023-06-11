@@ -5,7 +5,10 @@ export const filterQuery = (
   limit: number,
   field: string,
   type: string,
-  value: string
+  value: string,
+  orderbyField: string,
+  orderbyType: string,
+  orderbyDirection: string
 ) => {
   let query = qs.stringify({
     page: page,
@@ -19,9 +22,9 @@ export const filterQuery = (
     ],
     'order-by': [
       {
-        field: 'name',
-        type: 'field',
-        direction: 'asc',
+        field: orderbyField,
+        type: orderbyType,
+        direction: orderbyDirection,
       },
     ],
   });

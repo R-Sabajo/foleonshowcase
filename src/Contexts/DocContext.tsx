@@ -53,7 +53,6 @@ type DocProviderProps = {
 
 export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
   const { currentProject } = useContext(ProjectContext);
-
   const [project, setProject] = useState<number>(0);
   const [docsUrl, setDocsUrl] = useState<string>(
     'https://api.foleon.com/magazine/edition?page=1&limit=8'

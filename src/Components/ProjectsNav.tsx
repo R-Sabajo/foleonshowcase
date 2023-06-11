@@ -16,7 +16,10 @@ export const ProjectsNav = () => {
       100,
       'name',
       'like',
-      value
+      value,
+      'affected_on',
+      'field',
+      'desc'
     )}`;
 
     setSearchUrl(!value ? 'https://api.foleon.com/magazine/title' : searchUrl);

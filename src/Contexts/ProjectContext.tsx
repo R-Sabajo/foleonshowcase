@@ -6,7 +6,6 @@ import React, {
   ReactNode,
 } from 'react';
 import { AppContext } from './AppContext';
-import { DocContext } from './DocContext';
 
 type Project = {
   id: number;
@@ -61,7 +60,6 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const [url, setUrl] = useState<string>(
     'https://api.foleon.com/v2/magazine/title'
   );
-  const { docsUrl, setDocsUrl } = useContext(DocContext);
   const [searchUrl, setSearchUrl] = useState<string>(
     'https://api.foleon.com/magazine/title'
   );

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import searchIcon from '../img/searchIcon.svg';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import debounce from '../Helpers/debounce';
@@ -9,22 +9,25 @@ import { filterQuery } from '../Helpers/filterQuery';
 export const DocsNav = () => {
   const { setDocsUrl } = useContext(DocContext);
   const { currentProject } = useContext(ProjectContext);
+  const [filter, setFilter] = useState<string>('');
+  const [sort, setSort] = useState<string>('');
 
   // Make a function that sets the seachUrl from the searchfield value
   const handleSearch = (value: string) => {
+    let direction = sort === 'name' ? 'asc' : 'desc';
+    let term = value === '' ? '%%' : value;
     const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
       1,
-      100,
+      8,
       'name',
       'like',
-      value
+      term,
+      sort,
+      'field',
+      direction
     )}`;
 
-    setDocsUrl(
-      !value
-        ? 'https://api.foleon.com/magazine/edition?page=1&limit=8'
-        : searchUrl
-    );
+    setDocsUrl(searchUrl);
   };
   // Wrap it with a debouncer
   const debouncedSearch = debounce(handleSearch, 333);
@@ -34,23 +37,66 @@ export const DocsNav = () => {
     debouncedSearch(event.target.value);
   };
 
-  //   Example
-  // Let's suppose we filter a publication by published date in descending order (newest first). We can define the order-by defintion as follows:{
-  //   "order-by": [
-  //     {
-  //       "field": "created_on",
-  //       "type": "field",
-  //       "direction": "desc"
-  //     }
-  //   ]
-  // }
+  const handleFilter = (event: any) => {
+    setFilter(event.target.value);
+    let status = event.target.value === '' ? '%%' : event.target.value;
+    let direction = sort === 'name' ? 'asc' : 'desc';
+    const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
+      1,
+      8,
+      'status',
+      'like',
+      status,
+      sort,
+      'field',
+      direction
+    )}`;
+
+    setDocsUrl(searchUrl);
+  };
+
+  const handleSort = (event: any) => {
+    setSort(event.target.value);
+
+    let direction = event.target.value === 'name' ? 'asc' : 'desc';
+    const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
+      1,
+      8,
+      'status',
+      'like',
+      filter,
+      event.target.value,
+      'field',
+      direction
+    )}`;
+
+    setDocsUrl(searchUrl);
+  };
 
   return (
     <Container>
       <NavDiv>
-        <Title>
-          <span>Foleon Docs</span>
-        </Title>
+        <Title>Foleon Docs</Title>
+        <Sort
+          onChange={event => handleSort(event)}
+          name="sort"
+          id="sort-select"
+        >
+          <option value="affected_on">Last Edited</option>
+          <option value="name">A-Z</option>
+        </Sort>
+        <Filter
+          value={filter}
+          onChange={event => handleFilter(event)}
+          name="filter"
+          id="filter-select"
+        >
+          <option value="">Show All</option>
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+          <option value="offline">Offline</option>
+        </Filter>
+
         <InputLabel>
           <Icon src={searchIcon} alt="search icon" />
           <SearchField
@@ -99,6 +145,25 @@ const Title = styled.h2`
     font-size: 18px;
     margin-left: 5px;
   }
+`;
+
+const Filter = styled.select`
+  width: 150px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0px 20px 0px 10px;
+  transition: all 250ms ease-out;
+`;
+const Sort = styled.select`
+  width: 150px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0px 20px 0px 10px;
+  transition: all 250ms ease-out;
 `;
 
 const SearchField = styled.input`
