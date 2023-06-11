@@ -40,7 +40,7 @@ const Container = styled.div`
   padding: 40px 40px 0;
   display: flex;
   flex-direction: column;
-  height: 530px;
+  height: 100%;
   overflow: hidden;
 `;
 

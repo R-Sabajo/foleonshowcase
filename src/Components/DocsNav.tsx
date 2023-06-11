@@ -57,14 +57,17 @@ export const DocsNav = () => {
 
   const handleSort = (event: any) => {
     setSort(event.target.value);
-
+    let filterTerm =
+      currentProject !== 0
+        ? { field: 'title', type: 'eq', value: currentProject }
+        : { field: 'status', type: 'like', value: filter };
     let direction = event.target.value === 'name' ? 'asc' : 'desc';
     const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
       1,
       8,
-      'status',
-      'like',
-      filter,
+      filterTerm.field,
+      filterTerm.type,
+      filterTerm.value,
       event.target.value,
       'field',
       direction
@@ -81,6 +84,7 @@ export const DocsNav = () => {
           onChange={event => handleSort(event)}
           name="sort"
           id="sort-select"
+          value={sort}
         >
           <option value="affected_on">Last Edited</option>
           <option value="name">A-Z</option>
@@ -148,33 +152,33 @@ const Title = styled.h2`
 `;
 
 const Filter = styled.select`
-  width: 150px;
+  width: 100px;
   height: 40px;
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0px 20px 0px 10px;
+  padding: 0px 0px 0px 5px;
   transition: all 250ms ease-out;
 `;
 const Sort = styled.select`
-  width: 150px;
+  width: 100px;
   height: 40px;
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0px 20px 0px 10px;
+  padding: 0px 0px 0px 5px;
   transition: all 250ms ease-out;
 `;
 
 const SearchField = styled.input`
   position: relative;
-  width: 230px;
+  width: 200px;
   height: 40px;
   background-color: ${props => props.theme};
   color: ${props => props.color};
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0px 40px 0px 15px;
+  padding: 0px 27px 0px 15px;
   margin-top: 5px;
   transition: all 250ms ease-out;
 
@@ -209,7 +213,7 @@ const InputLabel = styled.label`
 
 const Icon = styled.img`
   position: absolute;
-  transform: translate(195px, 14px);
+  transform: translate(170px, 14px);
   z-index: 10;
   opacity: 1;
 `;
