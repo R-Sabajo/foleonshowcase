@@ -9,7 +9,7 @@ export const Pagination: React.FC = () => {
 
   return (
     <Container>
-      <Title>Pagination</Title>
+      <Title>Pagination </Title>
     </Container>
   );
 };

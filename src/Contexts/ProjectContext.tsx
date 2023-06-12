@@ -58,7 +58,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentProject, setCurrentProject] = useState<number>(0);
   const [url, setUrl] = useState<string>(
-    'https://api.foleon.com/v2/magazine/title'
+    'https://api.foleon.com/v2/magazine/title?page=1&limit=100'
   );
   const [searchUrl, setSearchUrl] = useState<string>(
     'https://api.foleon.com/magazine/title'
