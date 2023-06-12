@@ -63,12 +63,13 @@ export const DocList: React.FC = () => {
                   <p>Created: {dateConstructer(doc.created_on)}</p>
                   <p>Modified: {dateConstructer(doc.affected_on)}</p>
                 </DocDetails>
-                <Button>
-                  <a href={doc.preview}>
+
+                <a href={doc.preview} rel="noreferrer noopener" target="_blank">
+                  <Button>
                     <img src={previewIcon} alt="preview" />
-                  </a>
-                  Preview
-                </Button>
+                    Preview
+                  </Button>
+                </a>
               </DocInfo>
             )
         )}

@@ -18,6 +18,10 @@ export const GlobalStyle = createGlobalStyle`
 	margin:0;
 }
 
+a{
+	text-decoration: none;
+}
+
 body {
 	font-family: 'Proxima Nova';
 	background-color: var(--Dark-Blue);
