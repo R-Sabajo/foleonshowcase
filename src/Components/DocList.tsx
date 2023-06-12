@@ -52,13 +52,17 @@ export const DocList: React.FC = () => {
             doc.id === currentDoc && (
               <DocInfo infoOpen={doc.id === currentDoc} key={doc.id}>
                 <Closebutton onClick={() => handleClose(doc.id)}>X</Closebutton>
-                <h3>{doc.name}</h3>
-                <Screenshot source={doc.screenshot} />
-                <p>Category: {doc.category}</p>
-                <p>Pages: {doc.pages_count}</p>
-                <p>Status: {doc.status}</p>
-                <p>Created: {dateConstructer(doc.created_on)}</p>
-                <p>Modified: {dateConstructer(doc.affected_on)}</p>
+                <DocDetails>
+                  <h3>{doc.name}</h3>
+
+                  <Screenshot source={doc.screenshot} />
+
+                  <p>Category: {doc.category}</p>
+                  <p>Pages: {doc.pages_count}</p>
+                  <p>Status: {doc.status}</p>
+                  <p>Created: {dateConstructer(doc.created_on)}</p>
+                  <p>Modified: {dateConstructer(doc.affected_on)}</p>
+                </DocDetails>
                 <Button>
                   <a href={doc.preview}>
                     <img src={previewIcon} alt="preview" />
@@ -97,6 +101,14 @@ const DocInfo = styled.div<{ infoOpen: boolean }>`
 
   transform: ${props =>
     props.infoOpen ? 'translateX(0px)' : 'translateX(350px)'};
+`;
+
+const DocDetails = styled.div`
+  height: 70%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Closebutton = styled.p`
@@ -198,6 +210,7 @@ const Title = styled.p`
 
 export const Button = styled.button`
   height: 40px;
+  min-height: 40px;
   width: 130px;
   padding: 0px 16px;
   background-color: white;
@@ -207,6 +220,7 @@ export const Button = styled.button`
   font-size: 15px;
   display: flex;
   align-items: center;
+  margin-top: 20px;
   justify-content: space-around;
   cursor: pointer;
   transition: background-color 200ms ease-in-out;
