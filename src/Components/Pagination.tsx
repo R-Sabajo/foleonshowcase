@@ -3,7 +3,7 @@ import { DocContext } from '../Contexts/DocContext';
 import { useContext } from 'react';
 
 export const Pagination: React.FC = () => {
-  const { pagination, setDocsUrl } = useContext(DocContext);
+  const { pagination } = useContext(DocContext);
 
   console.log(pagination);
 
