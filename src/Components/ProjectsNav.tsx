@@ -17,6 +17,7 @@ export const ProjectsNav = () => {
       'name',
       'like',
       value,
+
       'affected_on',
       'field',
       'desc'
@@ -60,7 +61,7 @@ const Container = styled.div`
   width: 250px;
   height: 140px;
   grid-area: projects;
-  padding: 25px;
+  padding: 25px 25px 17px 25px;
   border-bottom: 1px solid var(--Grey-Blue);
   z-index: 3;
 `;

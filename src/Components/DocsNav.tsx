@@ -11,45 +11,150 @@ export const DocsNav = () => {
   const { currentProject } = useContext(ProjectContext);
   const [filter, setFilter] = useState<string>('');
   const [sort, setSort] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
 
-  // Make a function that sets the seachUrl from the searchfield value
+  type argsType = [
+    page: number,
+    limit: number,
+    //  Search
+    field0: string,
+    type0: string,
+    value0: string | number,
+    // Sort
+    orderbyField: string,
+    orderbyType: string,
+    orderbyDirection: string,
+    // Filter
+    field1?: string,
+    type1?: string,
+    value1?: string | number,
+    // Project
+    field2?: string,
+    type2?: string,
+    value2?: string | number
+  ];
+
   const handleSearch = (value: string) => {
+    setSearch(value);
     let direction = sort === 'name' ? 'asc' : 'desc';
     let term = value === '' ? '%%' : value;
+
+    //  Remove project and filter query from fetch if no project is selected and filter is all docs
+    const args: argsType =
+      currentProject === 0 && filter === ''
+        ? [1, 8, 'name', 'like', term, sort, 'field', direction]
+        : currentProject === 0
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            term,
+            sort,
+            'field',
+            direction,
+            'status',
+            'eq',
+            filter,
+          ]
+        : filter === ''
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            term,
+            sort,
+            'field',
+            direction,
+            'title',
+            'eq',
+            currentProject,
+          ]
+        : [
+            1,
+            8,
+            'name',
+            'like',
+            term,
+            sort,
+            'field',
+            direction,
+            'status',
+            'eq',
+            filter,
+            'title',
+            'eq',
+            currentProject,
+          ];
+
     const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
-      1,
-      8,
-      'name',
-      'like',
-      term,
-      sort,
-      'field',
-      direction
+      ...args
     )}`;
 
     setDocsUrl(searchUrl);
   };
-  // Wrap it with a debouncer
+
   const debouncedSearch = debounce(handleSearch, 333);
 
-  // Call the function in the onChangeHandler of the search field
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     debouncedSearch(event.target.value);
   };
 
   const handleFilter = (event: any) => {
     setFilter(event.target.value);
-    let status = event.target.value === '' ? '%%' : event.target.value;
     let direction = sort === 'name' ? 'asc' : 'desc';
+
+    const args: argsType =
+      currentProject === 0 && event.target.value === ''
+        ? [1, 8, 'name', 'like', search, sort, 'field', direction]
+        : currentProject === 0
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sort,
+            'field',
+            direction,
+            'status',
+            'eq',
+            event.target.value,
+          ]
+        : filter === ''
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sort,
+            'field',
+            direction,
+            'title',
+            'eq',
+            currentProject,
+          ]
+        : [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sort,
+            'field',
+            direction,
+            'status',
+            'eq',
+            event.target.value,
+            'title',
+            'eq',
+            currentProject,
+          ];
+
     const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
-      1,
-      8,
-      'status',
-      'like',
-      status,
-      sort,
-      'field',
-      direction
+      ...args
     )}`;
 
     setDocsUrl(searchUrl);
@@ -57,20 +162,59 @@ export const DocsNav = () => {
 
   const handleSort = (event: any) => {
     setSort(event.target.value);
-    let filterTerm =
-      currentProject !== 0
-        ? { field: 'title', type: 'eq', value: currentProject }
-        : { field: 'status', type: 'like', value: filter };
+    let sortTerm = event.target.value;
     let direction = event.target.value === 'name' ? 'asc' : 'desc';
+
+    const args: argsType =
+      currentProject === 0 && filter === ''
+        ? [1, 8, 'name', 'like', search, sortTerm, 'field', direction]
+        : currentProject === 0
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sortTerm,
+            'field',
+            direction,
+            'status',
+            'eq',
+            filter,
+          ]
+        : filter === ''
+        ? [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sortTerm,
+            'field',
+            direction,
+            'title',
+            'eq',
+            currentProject,
+          ]
+        : [
+            1,
+            8,
+            'name',
+            'like',
+            search,
+            sortTerm,
+            'field',
+            direction,
+            'status',
+            'eq',
+            filter,
+            'title',
+            'eq',
+            currentProject,
+          ];
+
     const searchUrl: string = `https://api.foleon.com/magazine/edition?${filterQuery(
-      1,
-      8,
-      filterTerm.field,
-      filterTerm.type,
-      filterTerm.value,
-      event.target.value,
-      'field',
-      direction
+      ...args
     )}`;
 
     setDocsUrl(searchUrl);
@@ -95,39 +239,25 @@ export const DocsNav = () => {
         <SelectLabel htmlFor="filter-select">
           Filter
           <Filter
-            disabled={currentProject !== 0}
             value={filter}
             onChange={event => handleFilter(event)}
             name="filter"
             id="filter-select"
           >
-            {currentProject !== 0 ? (
-              <>
-                <option value="">Deselect Project</option>
-              </>
-            ) : (
-              <>
-                <option value="">Show All</option>
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-                <option value="offline">Offline</option>
-              </>
-            )}
+            <option value="">Show All</option>
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="offline">Offline</option>
           </Filter>
         </SelectLabel>
 
         <InputLabel>
           <Icon src={searchIcon} alt="search icon" />
           <SearchField
-            disabled={currentProject !== 0}
             onChange={handleChange}
             color="var(--Dark-Blue)"
             theme="#fff"
-            placeholder={
-              currentProject !== 0
-                ? 'Deselect project to enable'
-                : 'Search all docs'
-            }
+            placeholder={'Search docs'}
           />
         </InputLabel>
       </NavDiv>
@@ -203,7 +333,7 @@ const SearchField = styled.input`
   color: ${props => props.color};
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0px 27px 0px 15px;
+  padding: 0px 30px 0px 15px;
   margin-top: 5px;
   transition: all 250ms ease-out;
 
