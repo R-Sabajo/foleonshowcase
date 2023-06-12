@@ -20,7 +20,7 @@ export const ProjectsNav = () => {
 
       'affected_on',
       'field',
-      'desc'
+      'asc'
     )}`;
 
     setSearchUrl(!value ? 'https://api.foleon.com/magazine/title' : searchUrl);

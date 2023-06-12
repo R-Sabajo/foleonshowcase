@@ -10,7 +10,7 @@ export const DocsNav = () => {
   const { setDocsUrl } = useContext(DocContext);
   const { currentProject } = useContext(ProjectContext);
   const [filter, setFilter] = useState<string>('');
-  const [sort, setSort] = useState<string>('');
+  const [sort, setSort] = useState<string>('affected_on');
   const [search, setSearch] = useState<string>('');
 
   type argsType = [
@@ -106,23 +106,7 @@ export const DocsNav = () => {
     let direction = sort === 'name' ? 'asc' : 'desc';
 
     const args: argsType =
-      currentProject === 0 && event.target.value === ''
-        ? [1, 8, 'name', 'like', search, sort, 'field', direction]
-        : currentProject === 0
-        ? [
-            1,
-            8,
-            'name',
-            'like',
-            search,
-            sort,
-            'field',
-            direction,
-            'status',
-            'eq',
-            event.target.value,
-          ]
-        : filter === ''
+      event.target.value === ''
         ? [
             1,
             8,

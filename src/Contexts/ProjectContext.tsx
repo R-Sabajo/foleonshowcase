@@ -110,7 +110,9 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({
               count: p._computed.editions_count,
             })
           );
-
+          if (currentProject === 0) {
+            setCurrentProject(currentProject);
+          }
           setProjects(projectData);
           setSearchProjects(searchProjectData);
         } catch (error: any) {

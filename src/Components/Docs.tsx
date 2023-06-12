@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ProjectInfo } from './ProjectInfo';
 import { DocList } from './DocList';
 import { DocsNav } from './DocsNav';
+import { Pagination } from './Pagination';
 
 export const Docs = () => {
   return (
@@ -9,7 +10,7 @@ export const Docs = () => {
       <ProjectInfo />
       <DocsNav />
       <DocList />
-      <h1>Pagination</h1>
+      <Pagination />
     </Container>
   );
 };

@@ -25,17 +25,19 @@ interface DocContextProps {
   currentDoc: number;
   project: number;
   docsUrl: string;
+  pagination: {};
   isLoading: boolean;
   setDocs: React.Dispatch<React.SetStateAction<Doc[]>>;
   setCurrentDoc: React.Dispatch<React.SetStateAction<number>>;
   setProject: React.Dispatch<React.SetStateAction<number>>;
   setDocsUrl: React.Dispatch<React.SetStateAction<string>>;
+  setPagination: React.Dispatch<React.SetStateAction<{}>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const DocContext = createContext<DocContextProps>({
   docs: [],
-
+  pagination: {},
   currentDoc: 0,
   project: 0,
   docsUrl: '',
@@ -44,6 +46,7 @@ export const DocContext = createContext<DocContextProps>({
   setCurrentDoc: () => {},
   setProject: () => {},
   setDocsUrl: () => {},
+  setPagination: () => {},
   setIsLoading: () => {},
 });
 
@@ -59,6 +62,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
   );
   const [docs, setDocs] = useState<Doc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [pagination, setPagination] = useState<{}>({});
   const [currentDoc, setCurrentDoc] = useState<number>(0);
   const { token, setToken } = useContext(AppContext);
 
@@ -97,10 +101,18 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
             screenshot: doc._embedded.screenshot._links.original.href,
             preview: doc._links.preview.href,
           }));
+          const pagination = {
+            links: jsonData?._links,
+            page: jsonData?.page,
+            page_count: jsonData?.page_count,
+            page_size: jsonData?.page_size,
+            total: jsonData?.total,
+          };
 
           if (project === 0) {
             setProject(currentProject);
           }
+          setPagination(pagination);
           setDocs(docData);
         } catch (error: any) {
           console.log(error.message);
@@ -119,12 +131,14 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
         docsUrl,
         setDocsUrl,
         isLoading,
+        pagination,
         setIsLoading,
         project,
         setProject,
         docs,
         currentDoc,
         setDocs,
+        setPagination,
         setCurrentDoc,
       }}
     >

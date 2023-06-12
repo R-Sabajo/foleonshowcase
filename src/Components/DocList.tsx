@@ -3,10 +3,21 @@ import { useContext } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import previewIcon from '../img/previewIcon.svg';
+import { dateConstructer } from '../Helpers/dateConstructer';
 
 export const DocList: React.FC = () => {
-  const { docs } = useContext(DocContext);
+  const { docs, currentDoc, setCurrentDoc } = useContext(DocContext);
   const { isLoading } = useContext(ProjectContext);
+
+  const handleClick = (id: number) => {
+    setCurrentDoc(currentDoc === id ? id : id);
+    console.log(id);
+  };
+
+  const handleClose = (id: number) => {
+    setCurrentDoc(0);
+    console.log(id);
+  };
 
   return (
     <Container>
@@ -15,7 +26,11 @@ export const DocList: React.FC = () => {
           <DocDiv isSelected={false}> Loading Docs...</DocDiv>
         ) : (
           docs?.map((doc: any) => (
-            <DocDiv key={doc.id} isSelected={false}>
+            <DocDiv
+              onClick={() => handleClick(doc.id)}
+              key={doc.id}
+              isSelected={doc.id === currentDoc}
+            >
               <DocCard>
                 <Screenshot source={doc.screenshot} />
                 <Preview
@@ -31,17 +46,63 @@ export const DocList: React.FC = () => {
           ))
         )}
       </DocGrid>
+      {currentDoc !== 0 &&
+        docs?.map(
+          (doc: any) =>
+            doc.id === currentDoc && (
+              <DocInfo infoOpen={doc.id === currentDoc} key={doc.id}>
+                <Closebutton onClick={() => handleClose(doc.id)}>X</Closebutton>
+                <h3>{doc.name}</h3>
+                <Screenshot source={doc.screenshot} />
+                <p>Category: {doc.category}</p>
+                <p>Pages: {doc.pages_count}</p>
+                <p>Status: {doc.status}</p>
+                <p>Created: {dateConstructer(doc.created_on)}</p>
+                <p>Modified: {dateConstructer(doc.affected_on)}</p>
+                <Button>
+                  <a href={doc.preview}>
+                    <img src={previewIcon} alt="preview" />
+                  </a>
+                  Preview
+                </Button>
+              </DocInfo>
+            )
+        )}
     </Container>
   );
 };
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   padding: 40px 40px 0;
   display: flex;
-  flex-direction: column;
   height: 100%;
   overflow: hidden;
+`;
+
+const DocInfo = styled.div<{ infoOpen: boolean }>`
+  background-color: white;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 0px;
+  right: 0px;
+  width: 350px;
+  height: 100%;
+  padding: 30px;
+  z-index: 7;
+  transition: transform 250ms ease-in;
+
+  transform: ${props =>
+    props.infoOpen ? 'translateX(0px)' : 'translateX(350px)'};
+`;
+
+const Closebutton = styled.p`
+  position: absolute;
+  right: 40px;
+  cursor: pointer;
 `;
 
 const DocGrid = styled.div`
@@ -133,4 +194,24 @@ const Title = styled.p`
   height: 50px;
   font-size: 17px;
   font-weight: 500;
+`;
+
+export const Button = styled.button`
+  height: 40px;
+  width: 130px;
+  padding: 0px 16px;
+  background-color: white;
+  border: 1px solid var(--Grey-Blue);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+
+  :hover {
+    background-color: var(--Light-Grey);
+  }
 `;
