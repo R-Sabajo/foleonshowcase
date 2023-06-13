@@ -25,7 +25,33 @@ interface DocContextProps {
   currentDoc: number;
   project: number;
   docsUrl: string;
-  pagination: [];
+  pagination: [
+    {
+      links: {
+        self: {
+          href: string;
+        };
+        first: {
+          href: string;
+        };
+        last: {
+          href: string;
+        };
+      };
+    },
+    {
+      page: number;
+    },
+    {
+      page_count: number;
+    },
+    {
+      page_size: number;
+    },
+    {
+      total: number;
+    }
+  ];
   isLoading: boolean;
   setDocs: React.Dispatch<React.SetStateAction<Doc[]>>;
   setCurrentDoc: React.Dispatch<React.SetStateAction<number>>;
@@ -37,7 +63,34 @@ interface DocContextProps {
 
 export const DocContext = createContext<DocContextProps>({
   docs: [],
-  pagination: [],
+  pagination: [
+    {
+      links: {
+        self: {
+          href: 'https://api.foleon.com/magazine/edition?page=1&limit=8&order-by%5B0%5D%5Bfield%5D=affected_on&order-by%5B0%5D%5Btype%5D=field&order-by%5B0%5D%5Bdirection%5D=desc&filter%5B2%5D%5Bfield%5D=title&filter%5B2%5D%5Btype%5D=eq&filter%5B2%5D%5Bvalue%5D=82538',
+        },
+        first: {
+          href: 'https://api.foleon.com/magazine/edition?limit=8&order-by%5B0%5D%5Bfield%5D=affected_on&order-by%5B0%5D%5Btype%5D=field&order-by%5B0%5D%5Bdirection%5D=desc&filter%5B2%5D%5Bfield%5D=title&filter%5B2%5D%5Btype%5D=eq&filter%5B2%5D%5Bvalue%5D=82538',
+        },
+        last: {
+          href: 'https://api.foleon.com/magazine/edition?page=1&limit=8&order-by%5B0%5D%5Bfield%5D=affected_on&order-by%5B0%5D%5Btype%5D=field&order-by%5B0%5D%5Bdirection%5D=desc&filter%5B2%5D%5Bfield%5D=title&filter%5B2%5D%5Btype%5D=eq&filter%5B2%5D%5Bvalue%5D=82538',
+        },
+      },
+    },
+    {
+      page: 1,
+    },
+    {
+      page_count: 1,
+    },
+    {
+      page_size: 8,
+    },
+    {
+      total: 5,
+    },
+  ],
+
   currentDoc: 0,
   project: 0,
   docsUrl: '',
@@ -101,7 +154,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
             screenshot: doc._embedded.screenshot._links.original.href,
             preview: doc._links.preview.href,
           }));
-          const pagination = [
+          const paginationData = [
             {
               links: jsonData?._links,
             },
@@ -113,7 +166,7 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
           if (project === 0) {
             setProject(currentProject);
           }
-          setPagination(pagination);
+          setPagination(paginationData);
           setDocs(docData);
         } catch (error: any) {
           console.log(error.message);
