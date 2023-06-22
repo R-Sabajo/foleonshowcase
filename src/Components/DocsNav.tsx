@@ -13,6 +13,8 @@ export const DocsNav = () => {
   const [sort, setSort] = useState<string>('affected_on');
   const [search, setSearch] = useState<string>('');
 
+  const { pagination, isLoading } = useContext(DocContext);
+
   type argsType = [
     page: number,
     limit: number,
@@ -207,7 +209,10 @@ export const DocsNav = () => {
   return (
     <Container>
       <NavDiv>
-        <Title>Foleon Docs</Title>
+        <Title>
+          <span>{!isLoading ? pagination[4].total : <span>&nbsp;</span>}</span>{' '}
+          Foleon Docs
+        </Title>
         <SelectLabel htmlFor="sort-select">
           Sort
           <Sort
@@ -275,7 +280,7 @@ const Title = styled.h2`
   font-weight: 500;
 
   span {
-    font-size: 18px;
+    font-size: 22px;
     margin-left: 5px;
   }
 `;
