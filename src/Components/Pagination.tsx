@@ -5,14 +5,14 @@ import { useContext } from 'react';
 export const Pagination: React.FC = () => {
   const { pagination, isLoading } = useContext(DocContext);
 
-  // if (
-  //   !isLoading &&
-  //   pagination.length > 0 &&
-  //   pagination[1] &&
-  //   pagination[1].page
-  // ) {
-  //   console.log(pagination);
-  // }
+  if (
+    !isLoading &&
+    pagination.length > 0 &&
+    pagination[1] &&
+    pagination[1].page
+  ) {
+    console.log(pagination);
+  }
 
   return (
     <Container>
