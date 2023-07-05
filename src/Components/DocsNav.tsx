@@ -8,12 +8,12 @@ import { filterQuery } from '../Helpers/filterQuery';
 
 export const DocsNav = () => {
   const { setDocsUrl } = useContext(DocContext);
+  const { pagination, isLoading } = useContext(DocContext);
+
   const { currentProject } = useContext(ProjectContext);
   const [filter, setFilter] = useState<string>('');
   const [sort, setSort] = useState<string>('affected_on');
   const [search, setSearch] = useState<string>('');
-
-  const { pagination, isLoading } = useContext(DocContext);
 
   type argsType = [
     page: number,
@@ -210,8 +210,15 @@ export const DocsNav = () => {
     <Container>
       <NavDiv>
         <Title>
-          <span>{!isLoading ? pagination[4].total : <span>&nbsp;</span>}</span>{' '}
-          Foleon Docs
+          <>
+            {!isLoading &&
+            pagination.length > 0 &&
+            pagination[1] &&
+            pagination[1].page
+              ? pagination[4].total
+              : 0}
+          </>
+          <span>Foleon Doc{pagination[4].total === 1 ? null : 's'}</span>
         </Title>
         <SelectLabel htmlFor="sort-select">
           Sort
@@ -220,6 +227,8 @@ export const DocsNav = () => {
             name="sort"
             id="sort-select"
             value={sort}
+            title="Sort"
+            aria-label="Sort"
           >
             <option value="affected_on">Last Edited</option>
             <option value="name">A-Z</option>
@@ -228,6 +237,8 @@ export const DocsNav = () => {
         <SelectLabel htmlFor="filter-select">
           Filter
           <Filter
+            title="Filter"
+            aria-label="Filter"
             value={filter}
             onChange={event => handleFilter(event)}
             name="filter"
@@ -285,7 +296,7 @@ const Title = styled.h2`
   }
 `;
 
-const Filter = styled.select`
+const Filter = styled.select<{ title: string }>`
   width: 150px;
   height: 40px;
   margin-left: 15px;
@@ -303,7 +314,7 @@ const Filter = styled.select`
     opacity: 1;
   }
 `;
-const Sort = styled.select`
+const Sort = styled.select<{ title: string }>`
   width: 150px;
   height: 40px;
   margin-left: 15px;

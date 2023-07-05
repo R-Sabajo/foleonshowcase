@@ -147,12 +147,12 @@ export const DocProvider: React.FC<DocProviderProps> = ({ children }) => {
             id: doc.id,
             name: doc.name,
             category: doc.category,
-            pages_count: doc._computed.pages_count,
+            pages_count: doc._computed?.pages_count,
             status: doc.status,
             created_on: doc.created_on,
             affected_on: doc.affected_on,
-            screenshot: doc._embedded.screenshot._links.original.href,
-            preview: doc._links.preview.href,
+            screenshot: doc._embedded.screenshot?._links.original.href,
+            preview: doc._links?.preview.href,
           }));
           const paginationData = [
             {

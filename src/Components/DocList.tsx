@@ -11,12 +11,10 @@ export const DocList: React.FC = () => {
 
   const handleClick = (id: number) => {
     setCurrentDoc(currentDoc === id ? id : id);
-    console.log(id);
   };
 
   const handleClose = (id: number) => {
     setCurrentDoc(0);
-    console.log(id);
   };
 
   return (
