@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { DocContext } from '../Contexts/DocContext';
 import { ProjectContext } from '../Contexts/ProjectContext';
 import previewIcon from '../img/previewIcon.svg';
+import editIcon from '../img/editIcon.svg';
 import { dateConstructer } from '../Helpers/dateConstructer';
 
 export const DocList: React.FC = () => {
@@ -13,7 +14,7 @@ export const DocList: React.FC = () => {
     setCurrentDoc(currentDoc === id ? id : id);
   };
 
-  const handleClose = (id: number) => {
+  const handleClose = () => {
     setCurrentDoc(0);
   };
 
@@ -31,13 +32,22 @@ export const DocList: React.FC = () => {
             >
               <DocCard>
                 <Screenshot source={doc.screenshot} />
-                <Preview
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={doc.preview}
-                >
-                  <img src={previewIcon} alt="preview" />
-                </Preview>
+                <IconsContainer>
+                  <PreviewIcon
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={doc.preview}
+                  >
+                    <img src={previewIcon} alt="preview doc" />
+                  </PreviewIcon>{' '}
+                  <EditorIcon
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://editor.foleon.com/doc/${doc.id}`}
+                  >
+                    <img src={editIcon} alt="editor doc" />
+                  </EditorIcon>
+                </IconsContainer>
               </DocCard>
               <Title>{doc.name}</Title>
             </DocDiv>
@@ -49,7 +59,7 @@ export const DocList: React.FC = () => {
           (doc: any) =>
             doc.id === currentDoc && (
               <DocInfo infoOpen={doc.id === currentDoc} key={doc.id}>
-                <Closebutton onClick={() => handleClose(doc.id)}>X</Closebutton>
+                <Closebutton onClick={() => handleClose()}>X</Closebutton>
                 <DocDetails>
                   <h3>{doc.name}</h3>
 
@@ -183,12 +193,35 @@ const Screenshot = styled.div<{ source: string }>`
   height: 120px;
 `;
 
-const Preview = styled.a`
+const PreviewIcon = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 30px;
   height: 30px;
+  border-radius: 50%;
+  opacity: 0.2;
+  transition: opacity 200ms ease-out;
+
+  :hover {
+    opacity: 1;
+  }
+`;
+const IconsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70px;
+  height: 35px;
+`;
+
+const EditorIcon = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3px;
+  width: 30px;
+  height: 35px;
   border-radius: 50%;
   opacity: 0.2;
   transition: opacity 200ms ease-out;

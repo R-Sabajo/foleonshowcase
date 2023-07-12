@@ -215,10 +215,10 @@ export const DocsNav = () => {
             pagination.length > 0 &&
             pagination[1] &&
             pagination[1].page
-              ? pagination[4].total
+              ? pagination[4]?.total
               : 0}
           </>
-          <span>Foleon Doc{pagination[4].total === 1 ? null : 's'}</span>
+          <span>Foleon Doc{pagination[4]?.total === 1 ? null : 's'}</span>
         </Title>
         <SelectLabel htmlFor="sort-select">
           Sort
