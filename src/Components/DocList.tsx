@@ -90,6 +90,8 @@ const Container = styled.div`
   width: 100%;
   padding: 40px 40px 0;
   display: flex;
+  align-items: start;
+  justify-content: center;
   height: 100%;
   overflow: hidden;
 `;
@@ -142,9 +144,10 @@ const DocGrid = styled.div`
     grid-template-rows: repeat(2, 1fr);
   }
 
-  gap: 20px 30px;
+  gap: 40px 30px;
   width: 100%;
   min-height: 400px;
+  max-width: 1200px;
   max-height: auto;
   padding: 10px 0 0;
   align-items: center;
@@ -190,7 +193,7 @@ const DocCard = styled.div`
 const Screenshot = styled.div<{ source: string }>`
   background: center / cover no-repeat url('${props => props.source}');
   width: 100%;
-  height: 120px;
+  height: 180px;
 `;
 
 const PreviewIcon = styled.a`
